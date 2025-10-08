@@ -1,0 +1,33 @@
+"use client";
+
+import Image from "next/image";
+import { Product } from "../types";
+import { useCartStore } from "@/store/cart.store";
+import { Button } from "@/components/ui/button";
+
+export function ProductCard({ product }: { product: Product }) {
+  const addItem = useCartStore((state) => state.addItem);
+
+  return (
+    <div className="rounded-xl border p-4 flex flex-col">
+      <div className="relative w-full h-48 mb-3">
+        <Image
+          src={product.image}
+          alt={product.title}
+          fill
+          className="object-contain"
+        />
+      </div>
+      <h3 className="font-semibold line-clamp-1">{product.title}</h3>
+      <p className="text-sm text-gray-500 line-clamp-2">{product.description}</p>
+      <p className="mt-2 font-bold">${product.price}</p>
+      <Button
+        variant="default"
+        className="mt-auto"
+        onClick={() => addItem(product)}
+      >
+        Add to Cart
+      </Button>
+    </div>
+  );
+}
