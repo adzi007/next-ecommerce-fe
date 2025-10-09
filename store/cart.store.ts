@@ -33,21 +33,15 @@ export const useCartStore = create<CartStore>((set) => ({
   //   }),
   addItem: async (product: Product) => {
     // Optimistic update (optional)
-    set((state) => ({
-      items: [...state.items, { ...product, quantity: 1 }],
-    }));
+    // Call internal API route
+      const newItem = await addToCartAPI(product);
 
-    try {
-      
-      await addToCartAPI(product); // sync to backend
-
-    } catch (err) {
-      console.error("Failed to add to cart:", err);
-      // Rollback or show error message if needed
+      // Update local store
       set((state) => ({
-        items: state.items.filter((item) => item.id !== product.id),
+        items: [...state.items, { ...product, quantity: 1 }],
       }));
-    }
+
+    
   },
   removeItem: (id) =>
     set((state) => ({
