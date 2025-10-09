@@ -16,6 +16,7 @@ export function ProductCard({ product }: { product: Product }) {
           alt={product.title}
           fill
           className="object-contain"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
         />
       </div>
       <h3 className="font-semibold line-clamp-1">{product.title}</h3>

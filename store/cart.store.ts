@@ -38,7 +38,9 @@ export const useCartStore = create<CartStore>((set) => ({
     }));
 
     try {
+      
       await addToCartAPI(product); // sync to backend
+
     } catch (err) {
       console.error("Failed to add to cart:", err);
       // Rollback or show error message if needed
