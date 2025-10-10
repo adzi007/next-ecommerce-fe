@@ -12,3 +12,8 @@ export const externalApi = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+// Used for client requests to Next.js API routes (internal)
+export const internalApi = axios.create({
+  baseURL: "/api",
+});

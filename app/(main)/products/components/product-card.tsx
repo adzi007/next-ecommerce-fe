@@ -4,9 +4,24 @@ import Image from "next/image";
 import { Product } from "../types";
 import { useCartStore } from "@/store/cart.store";
 import { Button } from "@/components/ui/button";
+import { useAddToCart } from "@/lib/api/cart";
 
 export function ProductCard({ product }: { product: Product }) {
-  const addItem = useCartStore((state) => state.addItem);
+  // const addItem = useCartStore((state) => state.addItem);
+
+  //  const { mutate: addToCart, isPending, isSuccess } = useAddToCart({
+  //     onSuccess: () => {
+  //       // useCartStore.getState().setItems(data.cartItems);
+  //     },
+  //  });
+
+   const { mutate: addToCart, isPending, isSuccess } = useAddToCart({
+      onSuccess: (data) => {
+
+        console.log("data onsuccess reactQuery", data);
+        useCartStore.getState().addItem(product)
+      },
+    });
 
   return (
     <div className="rounded-xl border p-4 flex flex-col">
@@ -25,9 +40,11 @@ export function ProductCard({ product }: { product: Product }) {
       <Button
         variant="default"
         className="mt-auto"
-        onClick={() => addItem(product)}
+        // onClick={() => addItem(product)}
+        onClick={() => addToCart(product)}
       >
-        Add to Cart
+        {/* Add to Cart */}
+        {isPending ? "Adding..." : isSuccess ? "Added!" : "Add to Cart"}
       </Button>
     </div>
   );

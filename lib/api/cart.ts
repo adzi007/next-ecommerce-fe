@@ -1,5 +1,6 @@
 import { Product } from "@/app/products/types";
-import { externalApi } from "./index"; // use external backend API
+import { externalApi, internalApi } from "./index"; // use external backend API
+import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 
 export async function addToCartAPI(product: Product) {
   
@@ -16,6 +17,18 @@ export async function addToCartAPI(product: Product) {
 
   return res.json();
 }
+
+export function useAddToCart(options?: UseMutationOptions<any, Error, Product>) {
+  return useMutation({
+    mutationFn: async (product: Product) => {
+      const { data } = await internalApi.post("/cart", { product });
+      return data;
+    },
+    ...options,
+  });
+}
+
+// lorem ipsum dolor asit amet
 
 export async function getCartAPI() {
   const res = await externalApi.get("/cart");
