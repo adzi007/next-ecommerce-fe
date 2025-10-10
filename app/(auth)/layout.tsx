@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ReactQueryProvider } from "@/lib/react-query-provider";
-import { Navbar } from "@/components/layout/navbar";
+// import { Geist, Geist_Mono } from "next/font/google";
+// import { ReactQueryProvider } from "@/lib/react-query-provider";
+// import { Navbar } from "@/components/layout/navbar";
 import "./../globals.css";
 
 export const metadata: Metadata = {
@@ -19,11 +19,15 @@ export default function SignupLayout({
       {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body> */}
-      <body className="bg-gray-50 text-gray-900">
+      {/* <body className="bg-gray-50 text-gray-900">
         <ReactQueryProvider>
           <h1>This Is Auth Layout</h1>
           <main>{children}</main>
         </ReactQueryProvider>
+      </body> */}
+
+       <body className="bg-gray-50 text-gray-900 flex min-h-screen items-center justify-center">
+        {children}
       </body>
     </html>
   );
