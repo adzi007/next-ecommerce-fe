@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
-// import { ReactQueryProvider } from "@/lib/react-query-provider";
+import { ReactQueryProvider } from "@/lib/react-query-provider";
 // import { Navbar } from "@/components/layout/navbar";
 import "./../globals.css";
 import { Toaster } from "@/components/ui/sonner"
@@ -28,7 +28,8 @@ export default function SignupLayout({
       </body> */}
 
        <body className="bg-gray-50 text-gray-900 flex min-h-screen items-center justify-center">
-        {children}
+        <ReactQueryProvider>
+          {children}
         <Toaster toastOptions={{
           style: {
             background: 'black', // Example: set background to red
@@ -36,6 +37,8 @@ export default function SignupLayout({
           },
           className: 'my-global-toast', // Optional: add a custom class
         }} />
+        </ReactQueryProvider>
+        
       </body>
     </html>
   );

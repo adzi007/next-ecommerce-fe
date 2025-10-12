@@ -49,7 +49,8 @@ export default function Page() {
           onSubmit={form.handleSubmit(onSubmit)} 
           className="space-y-4">
           <div>
-            <Input placeholder="Full name" {...form.register("name")} disabled={loading} />
+            <label htmlFor="input-name">Name</label>
+            <Input placeholder="Full name" id="input-name" {...form.register("name")} disabled={loading} />
             {form.formState.errors.name && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.name.message}
@@ -58,7 +59,8 @@ export default function Page() {
           </div>
 
           <div>
-            <Input placeholder="Email address" type="email" {...form.register("email")} disabled={loading} />
+            <label htmlFor="input-email">Email</label>
+            <Input placeholder="Email address" id="input-email" type="email" {...form.register("email")} disabled={loading} />
             {form.formState.errors.email && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.email.message}
@@ -67,7 +69,8 @@ export default function Page() {
           </div>
 
           <div>
-            <Input placeholder="Password" type="password" {...form.register("password")} disabled={loading} />
+            <label htmlFor="input-password">Password</label>
+            <Input placeholder="Password" id="input-password" type="password" {...form.register("password")} disabled={loading} />
             {form.formState.errors.password && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.password.message}
@@ -76,7 +79,8 @@ export default function Page() {
           </div>
 
           <div>
-            <Input placeholder="Confirm Password" type="password" {...form.register("confirmPassword")} disabled={loading} />
+            <label htmlFor="input-confirm-password">Confirm Password</label>
+            <Input placeholder="Confirm Password" id="input-confirm-password" type="password" {...form.register("confirmPassword")} disabled={loading} />
             {form.formState.errors.confirmPassword && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.confirmPassword.message}

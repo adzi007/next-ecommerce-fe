@@ -2,18 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { memo } from "react"
-import { SubmitHandler, useForm, Controller } from "react-hook-form"
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "@/components/ui/input-group"
+import { useForm, Controller } from "react-hook-form"
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { toast } from "sonner"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useLogin } from "@/lib/api/auth"
 
-// type LoginInputs = {
-//     email: string
-//     password: string
-// }
 
 const formLoginSchema = z.object({
     email : z.email("Invalid email address"),
@@ -22,17 +17,20 @@ const formLoginSchema = z.object({
 
 export default function LoginForm() {
 
-    // const { register, handleSubmit, formState: { errors } } = useForm<LoginInputs>()
-    
-    // const onSubmit: SubmitHandler<LoginInputs> = (data) => {
-    //     console.log("data >>> ", data);
-    // }
+    const { mutate: submitLogin, isPending: isPendingLogin, } = useLogin({
+        onSuccess: (data) => {
 
-    // const SubmitButton = memo(({ disabled }: { disabled: boolean }) => (
-    //     <Button disabled={disabled} type="submit" className="w-full">
-    //         Login
-    //     </Button>
-    // ));
+            console.log("response in client >>> ", data);
+            
+            toast("Login Success", {
+                description: "Redirection to home...",
+                position: "top-center",
+            })
+        },
+        onError: (error) => {
+            console.log("error in client >>> ", error);
+        }
+    })
 
     const form = useForm<z.infer<typeof formLoginSchema>>({
         resolver: zodResolver(formLoginSchema),
@@ -42,33 +40,8 @@ export default function LoginForm() {
         }
     })
 
-    function onSubmit(data: z.infer<typeof formLoginSchema>) {
-
-        console.log("data >>>>", data);
-
-        // toast("Event has been created", {
-        //   description: "Sunday, December 03, 2023 at 9:00 AM",
-        //   action: {
-        //     label: "Undo",
-        //     onClick: () => console.log("Undo"),
-        //   },
-        // })
-        
-
-        toast("You submitted the following values:", {
-            description: (
-                <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-                <code>{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-            position: "top-center",
-            classNames: {
-                content: "flex flex-col gap-2 bg-gray-700 p-1 text-white",
-            },
-            style: {
-                "--border-radius": "calc(var(--radius)  + 4px)",
-            } as React.CSSProperties,
-        })
+    async function onSubmit(data: z.infer<typeof formLoginSchema>) {
+        submitLogin(data)
     }
 
     return (
@@ -132,7 +105,9 @@ export default function LoginForm() {
             </form>
 
             <Button type="submit" form="form-rhf-demo" className="mt-3">
-                Submit
+                { isPendingLogin ? "Loading Login...":"Login" }
+               
+                {/* Submit */}
             </Button>
         </>
         
