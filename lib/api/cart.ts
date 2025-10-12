@@ -1,4 +1,4 @@
-import { Product } from "@/app/products/types";
+import { Product } from "@/app/(main)/products/types"; 
 import { externalApi, internalApi } from "./index"; // use external backend API
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 

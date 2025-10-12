@@ -26,11 +26,8 @@ export default function Page() {
 
       console.log("data >>> ", data);
       
-
       form.reset();
-
       // form.formState.isDirty
-
 
     } catch (error) {
       console.error(error);
@@ -52,11 +49,7 @@ export default function Page() {
           onSubmit={form.handleSubmit(onSubmit)} 
           className="space-y-4">
           <div>
-            <Input
-              placeholder="Full name"
-              {...form.register("name")}
-              disabled={loading}
-            />
+            <Input placeholder="Full name" {...form.register("name")} disabled={loading} />
             {form.formState.errors.name && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.name.message}
@@ -65,12 +58,7 @@ export default function Page() {
           </div>
 
           <div>
-            <Input
-              placeholder="Email address"
-              type="email"
-              {...form.register("email")}
-              disabled={loading}
-            />
+            <Input placeholder="Email address" type="email" {...form.register("email")} disabled={loading} />
             {form.formState.errors.email && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.email.message}
@@ -79,12 +67,7 @@ export default function Page() {
           </div>
 
           <div>
-            <Input
-              placeholder="Password"
-              type="password"
-              {...form.register("password")}
-              disabled={loading}
-            />
+            <Input placeholder="Password" type="password" {...form.register("password")} disabled={loading} />
             {form.formState.errors.password && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.password.message}
@@ -93,12 +76,7 @@ export default function Page() {
           </div>
 
           <div>
-            <Input
-              placeholder="Confirm Password"
-              type="password"
-              {...form.register("confirmPassword")}
-              disabled={loading}
-            />
+            <Input placeholder="Confirm Password" type="password" {...form.register("confirmPassword")} disabled={loading} />
             {form.formState.errors.confirmPassword && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.confirmPassword.message}
@@ -106,11 +84,7 @@ export default function Page() {
             )}
           </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={loading}
-          >
+          <Button type="submit" className="w-full" disabled={loading} >
             {/* Sign Up */}
             {loading ? "Creating..." : "Sign Up"}
           </Button>
