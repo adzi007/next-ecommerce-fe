@@ -5,7 +5,7 @@ import { useCartStore } from "@/store/cart.store";
 
 export function Navbar() {
   const items = useCartStore((state) => state.items);
-  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+  const totalItems = items.reduce((sum, i) => sum + i.qty, 0);
 
   return (
     <header className="w-full border-b bg-white sticky top-0 z-50">

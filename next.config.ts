@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "fakestoreapi.com",
       },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

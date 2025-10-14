@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import type { Product } from "@/app/products/types";
-import { addToCartAPI } from "@/lib/api/cart";
+import type { Product } from "@/app/(main)/products/types";
+// import { addToCartAPI } from "@/lib/api/cart";
 
 interface CartItem extends Product {
-  quantity: number;
+  qty: number;
 }
 
 interface CartStore {
@@ -24,7 +24,7 @@ export const useCartStore = create<CartStore>((set) => ({
 
       // Update local store
       set((state) => ({
-        items: [...state.items, { ...product, quantity: 1 }],
+        items: [...state.items, { ...product, qty: 1 }],
       }));
 
     
@@ -35,3 +35,5 @@ export const useCartStore = create<CartStore>((set) => ({
     })),
   clear: () => set({ items: [] }),
 }));
+
+

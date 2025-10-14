@@ -24,22 +24,23 @@ export function ProductCard({ product }: { product: Product }) {
     });
 
   return (
-    <div className="rounded-xl border p-4 flex flex-col">
+    <div className="rounded-sm border p-2 flex flex-col">
       <div className="relative w-full h-48 mb-3">
         <Image
           src={product.image}
-          alt={product.title}
+          alt={product.name}
+          unoptimized
           fill
-          className="object-contain"
+          className="object-cover rounded-sm"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
         />
       </div>
-      <h3 className="font-semibold line-clamp-1">{product.title}</h3>
-      <p className="text-sm text-gray-500 line-clamp-2">{product.description}</p>
-      <p className="mt-2 font-bold">${product.price}</p>
+      <h3 className="font-semibold line-clamp-1">{product.name}</h3>
+      {/* <p className="text-sm text-gray-500 line-clamp-2">{product.description}</p> */}
+      <p className="mt-2 font-bold">${product.priceSell}</p>
       <Button
         variant="default"
-        className="mt-auto"
+        className="mt-2 hover:cursor-pointer rounded-sm"
         // onClick={() => addItem(product)}
         onClick={() => addToCart(product)}
       >
