@@ -2,15 +2,37 @@
 import { Input } from "@/components/ui/input";
 import { Minus, Plus, Trash } from "lucide-react";
 import { Product } from "../../products/types";
+import { useCartStore } from "@/store/cart.store";
+import { ChangeEvent, useEffect, useState } from "react";
 
 interface CartItemProps extends Product {
   qty: number;
 }
 
-export default function CartProductItem({ name, image, id, qty, priceSell }:CartItemProps) {
+export default function CartProductItem({ name, image, id, qty, priceSell, slug }:CartItemProps) {
+
+    const [localQty, setlocalQty] = useState(0)
+
+    useEffect(() => {
+
+        setlocalQty(qty)
+        useCartStore.getState().addItem({ name, image, id, qty, priceSell, slug })
+        console.log("added on moun", qty);
+        
+        
+    }, [])
+
+    const updateQtyHandle = (e: ChangeEvent<HTMLInputElement>) => {
+
+        // do update zustand store and calculate sub total
+        console.log("update zustand >> ", id, e.target.value);
+        setlocalQty(parseInt(e.target.value))
+
+    }
+    
 
     return (
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6" key={id}>
             <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
             
                 <a href="#" className="shrink-0 md:order-1">
@@ -20,20 +42,21 @@ export default function CartProductItem({ name, image, id, qty, priceSell }:Cart
                 <div className="flex items-center justify-between md:order-3 md:justify-end">
                     <div className="flex items-center">
                     <button type="button" className="inline-flex size-6 p-1 shrink-0 items-center justify-center rounded-sm border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100">
-                        <Plus />
+                        <Minus />
                     </button>
                     <Input 
                         type="text" 
-                        defaultValue={""} 
                         id="counter-input" 
                         data-input-counter 
                         className="w-10 shrink-0 border-0 bg-transparent shadow-none text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" 
                         placeholder="" 
-                        value={qty} 
+                        value={localQty}
+                        onChange={updateQtyHandle}
                         required 
                     />
                     <button type="button" className="inline-flex size-6 p-1 shrink-0 items-center justify-center rounded-sm border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100">
-                        <Minus />
+                        
+                        <Plus />
                     </button>
                     </div>
                     <div className="text-end md:order-4 md:w-32">

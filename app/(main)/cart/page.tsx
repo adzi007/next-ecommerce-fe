@@ -21,6 +21,7 @@ export default function Page() {
 
                 {cartData.data.map((item) => 
                   <CartProductItem 
+                    key={item.id}
                     name={item.name} 
                     image={item.image} 
                     id={item.id} 

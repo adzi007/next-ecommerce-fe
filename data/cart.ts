@@ -20,7 +20,7 @@ export const dummyCart = {
             slug: "sprite-330ml",
             image: "https://placehold.co/200",
             price: 1500,
-            qty: 1,
+            qty: 3,
             category: {
                 name: "Drinks",
                 slug: "drinks"

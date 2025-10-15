@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useAddToCart } from "@/lib/api/cart";
 
 export function ProductCard({ product }: { product: Product }) {
-  // const addItem = useCartStore((state) => state.addItem);
 
+  // const addItem = useCartStore((state) => state.addItem);
   //  const { mutate: addToCart, isPending, isSuccess } = useAddToCart({
   //     onSuccess: () => {
   //       // useCartStore.getState().setItems(data.cartItems);
@@ -16,12 +16,12 @@ export function ProductCard({ product }: { product: Product }) {
   //  });
 
    const { mutate: addToCart, isPending, isSuccess } = useAddToCart({
-      onSuccess: (data) => {
+    onSuccess: (data) => {
 
-        console.log("data onsuccess reactQuery", data);
-        useCartStore.getState().addItem(product)
-      },
-    });
+      console.log("data onsuccess reactQuery", data);
+      useCartStore.getState().addItem({ ...product, qty: 1 })
+    },
+  });
 
   return (
     <div className="rounded-sm border p-2 flex flex-col">
