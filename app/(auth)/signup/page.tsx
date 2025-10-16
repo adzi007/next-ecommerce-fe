@@ -22,6 +22,7 @@ export default function Page() {
     try {
       // Example request (adjust to your API)
       await new Promise((res) => setTimeout(res, 1000));
+      
       alert("Account created successfully!");
 
       console.log("data >>> ", data);
