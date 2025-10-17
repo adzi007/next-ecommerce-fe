@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SignupFormData, signupSchema } from "@/lib/validation/signup-schema";
+import { useRegister } from "@/lib/api/auth";
 
 
 export default function Page() {
@@ -17,17 +18,30 @@ export default function Page() {
     defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
   });
 
+
+  const { mutate: signupAction, isPending, isSuccess } = useRegister({
+    onSuccess: (data) => {
+      console.log("response register api", data);
+      form.reset();
+    }
+  })
+
+
   async function onSubmit(data: SignupFormData) {
+
     setLoading(true);
+
     try {
       // Example request (adjust to your API)
-      await new Promise((res) => setTimeout(res, 1000));
+      // await new Promise((res) => setTimeout(res, 1000));
       
-      alert("Account created successfully!");
+      // alert("Account created successfully!");
 
-      console.log("data >>> ", data);
+      // console.log("data >>> ", data);
+
+      signupAction(data)
       
-      form.reset();
+      // form.reset();
       // form.formState.isDirty
 
     } catch (error) {

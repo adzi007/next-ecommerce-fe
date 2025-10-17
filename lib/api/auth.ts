@@ -6,6 +6,12 @@ interface LoginInterface {
   password: string;
 }
 
+interface RegisterInterface {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export function useLogin(options?: UseMutationOptions<any, Error, LoginInterface>) {
     return useMutation({
         mutationFn: async (loginData: LoginInterface) => {
@@ -16,4 +22,16 @@ export function useLogin(options?: UseMutationOptions<any, Error, LoginInterface
         ...options,
     });
 }
+
+export function useRegister(options?: UseMutationOptions<any, Error, RegisterInterface>) {
+    return useMutation({
+        mutationFn: async (loginData: RegisterInterface) => {
+            // const { data } = await internalApi.post("/auth/login", { loginData })
+            // return data
+            return await internalApi.post("auth/signup", { loginData })
+        },
+        ...options,
+    });
+}
+
 

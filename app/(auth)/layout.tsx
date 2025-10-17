@@ -4,6 +4,8 @@ import { ReactQueryProvider } from "@/lib/react-query-provider";
 // import { Navbar } from "@/components/layout/navbar";
 import "./../globals.css";
 import { Toaster } from "@/components/ui/sonner"
+// import { SessionProvider } from "next-auth/react"
+import { NextAuthProvider } from "../providers/session-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,16 +30,25 @@ export default function SignupLayout({
       </body> */}
 
        <body className="bg-gray-50 text-gray-900 flex min-h-screen items-center justify-center">
-        <ReactQueryProvider>
-          {children}
-        <Toaster toastOptions={{
-          style: {
-            background: 'black', // Example: set background to red
-            color: 'white', // Example: set text color to white
-          },
-          className: 'my-global-toast', // Optional: add a custom class
-        }} />
-        </ReactQueryProvider>
+        {/* <SessionProvider> */}
+
+        <NextAuthProvider>
+          <ReactQueryProvider>
+            {children}
+            <Toaster toastOptions={{
+              style: {
+                background: 'black', // Example: set background to red
+                color: 'white', // Example: set text color to white
+              },
+              className: 'my-global-toast', // Optional: add a custom class
+            }} />
+          </ReactQueryProvider>
+        </NextAuthProvider>
+
+          
+
+        {/* </SessionProvider> */}
+        
         
       </body>
     </html>

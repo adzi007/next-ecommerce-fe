@@ -8,13 +8,6 @@ import { useAddToCart } from "@/lib/api/cart";
 
 export function ProductCard({ product }: { product: Product }) {
 
-  // const addItem = useCartStore((state) => state.addItem);
-  //  const { mutate: addToCart, isPending, isSuccess } = useAddToCart({
-  //     onSuccess: () => {
-  //       // useCartStore.getState().setItems(data.cartItems);
-  //     },
-  //  });
-
    const { mutate: addToCart, isPending, isSuccess } = useAddToCart({
     onSuccess: (data) => {
 

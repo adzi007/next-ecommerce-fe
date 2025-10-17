@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ReactQueryProvider } from "@/lib/react-query-provider";
 import { Navbar } from "@/components/layout/navbar";
 import "../globals.css";
+import { NextAuthProvider } from "../providers/session-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +31,13 @@ export default function RootLayout({
         {children}
       </body> */}
       <body className="bg-gray-50 text-gray-900">
-        <ReactQueryProvider>
-          <Navbar />
-          <main>{children}</main>
-        </ReactQueryProvider>
+        <NextAuthProvider>
+          <ReactQueryProvider>
+            <Navbar />
+            <main>{children}</main>
+          </ReactQueryProvider>
+        </NextAuthProvider>
+        
       </body>
     </html>
   );
