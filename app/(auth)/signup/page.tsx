@@ -7,11 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SignupFormData, signupSchema } from "@/lib/validation/signup-schema";
 import { useRegister } from "@/lib/api/auth";
-
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
 
   const [loading, setLoading] = useState(false);
+   const router = useRouter()
 
   const form = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
@@ -21,8 +22,13 @@ export default function Page() {
 
   const { mutate: signupAction, isPending, isSuccess } = useRegister({
     onSuccess: (data) => {
+
       console.log("response register api", data);
+      alert("Register Success!")
       form.reset();
+
+      router.push('/login')
+
     }
   })
 
@@ -32,17 +38,8 @@ export default function Page() {
     setLoading(true);
 
     try {
-      // Example request (adjust to your API)
-      // await new Promise((res) => setTimeout(res, 1000));
-      
-      // alert("Account created successfully!");
-
-      // console.log("data >>> ", data);
-
+     
       signupAction(data)
-      
-      // form.reset();
-      // form.formState.isDirty
 
     } catch (error) {
       console.error(error);

@@ -16,4 +16,7 @@ export const externalApi = axios.create({
 // Used for client requests to Next.js API routes (internal)
 export const internalApi = axios.create({
   baseURL: "/api",
+   headers: {
+    "Content-Type": "application/json",
+  },
 });

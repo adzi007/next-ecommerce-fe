@@ -25,10 +25,12 @@ export function useLogin(options?: UseMutationOptions<any, Error, LoginInterface
 
 export function useRegister(options?: UseMutationOptions<any, Error, RegisterInterface>) {
     return useMutation({
-        mutationFn: async (loginData: RegisterInterface) => {
-            // const { data } = await internalApi.post("/auth/login", { loginData })
+        mutationFn: async (userData: RegisterInterface) => {
+            // const { data } = await internalApi.post("/auth/login", { userData })
             // return data
-            return await internalApi.post("auth/signup", { loginData })
+            console.log("userData >>> ", userData);
+            
+            return await internalApi.post("auth/signup", userData )
         },
         ...options,
     });
