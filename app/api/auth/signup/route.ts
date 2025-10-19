@@ -27,8 +27,7 @@ export async function POST(req: Request) {
             data: {
                 name,
                 email,
-                password: hashedPassword,
-                isVerified: false
+                password: hashedPassword
             },
         })
 

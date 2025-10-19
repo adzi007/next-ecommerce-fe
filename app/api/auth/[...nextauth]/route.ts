@@ -1,42 +1,45 @@
 import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
-import bcrypt from "bcryptjs"
+// import CredentialsProvider from "next-auth/providers/credentials"
+// import { PrismaAdapter } from "@auth/prisma-adapter"
+// import { prisma } from "@/lib/prisma"
+// import bcrypt from "bcryptjs"
 
-export const authOptions = {
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        const user = await prisma.user.findUnique({
-          where: { email: credentials?.email },
-        })
+import { authOptions } from "@/lib/auth"
 
-        if (!user) {
-          throw new Error("No user found")
-        }
+// export const authOptions = {
+//   adapter: PrismaAdapter(prisma),
+//   providers: [
+//     CredentialsProvider({
+//       name: "Credentials",
+//       credentials: {
+//         email: { label: "Email", type: "text" },
+//         password: { label: "Password", type: "password" },
+//       },
+//       async authorize(credentials) {
 
-        const isValid = await bcrypt.compare(credentials!.password, user.password)
-        if (!isValid) throw new Error("Invalid password")
+//         const user = await prisma.user.findUnique({
+//           where: { email: credentials?.email },
+//         })
 
-        return user
-      },
-    }),
-  ],
-  session: {
-    strategy: "jwt" as const,
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/login",
-  },
-}
+//         if (!user) {
+//           throw new Error("No user found")
+//         }
+
+//         const isValid = await bcrypt.compare(credentials!.password, user.password)
+//         if (!isValid) throw new Error("Invalid password")
+
+//         return user
+//       },
+//     }),
+//   ],
+//   session: {
+//     strategy: "jwt" as const,
+//   },
+//   secret: process.env.NEXTAUTH_SECRET,
+//   pages: {
+//     signIn: "/login",
+//   },
+// }
 
 const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }

@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useLogin } from "@/lib/api/auth"
-
+import { signIn } from "next-auth/react"
 
 const formLoginSchema = z.object({
     email : z.email("Invalid email address"),
@@ -16,21 +16,6 @@ const formLoginSchema = z.object({
 })
 
 export default function LoginForm() {
-
-    const { mutate: submitLogin, isPending: isPendingLogin, } = useLogin({
-        onSuccess: (data) => {
-
-            console.log("response in client >>> ", data);
-            
-            toast("Login Success", {
-                description: "Redirection to home...",
-                position: "top-center",
-            })
-        },
-        onError: (error) => {
-            console.log("error in client >>> ", error);
-        }
-    })
 
     const form = useForm<z.infer<typeof formLoginSchema>>({
         resolver: zodResolver(formLoginSchema),
@@ -41,7 +26,14 @@ export default function LoginForm() {
     })
 
     async function onSubmit(data: z.infer<typeof formLoginSchema>) {
-        submitLogin(data)
+        // submitLogin(data)
+        // await signIn("credentials", { data, redirect: true, callbackUrl: "/" })
+        await signIn("credentials", {
+            email: data.email,
+            password: data.password,
+            redirect: true,
+            callbackUrl: "/",
+        })
     }
 
     return (
@@ -105,9 +97,9 @@ export default function LoginForm() {
             </form>
 
             <Button type="submit" form="form-rhf-demo" className="mt-3">
-                { isPendingLogin ? "Loading Login...":"Login" }
+                {/* { isPendingLogin ? "Loading Login...":"Login" } */}
                
-                {/* Submit */}
+                Submit
             </Button>
         </>
         
