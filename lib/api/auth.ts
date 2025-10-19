@@ -28,7 +28,7 @@ export function useRegister(options?: UseMutationOptions<any, Error, RegisterInt
         mutationFn: async (userData: RegisterInterface) => {
             // const { data } = await internalApi.post("/auth/login", { userData })
             // return data
-            console.log("userData >>> ", userData);
+            // console.log("userData >>> ", userData);
             
             return await internalApi.post("auth/signup", userData )
         },

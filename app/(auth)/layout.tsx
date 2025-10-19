@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
 import { ReactQueryProvider } from "@/lib/react-query-provider";
-// import { Navbar } from "@/components/layout/navbar";
 import "./../globals.css";
 import { Toaster } from "@/components/ui/sonner"
-// import { SessionProvider } from "next-auth/react"
 import { NextAuthProvider } from "../providers/session-provider";
+import { ClientToaster } from "@/components/ui/client-toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,36 +17,22 @@ export default function SignupLayout({
 }>) {
   return (
     <html lang="en">
-      {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
-      </body> */}
-      {/* <body className="bg-gray-50 text-gray-900">
-        <ReactQueryProvider>
-          <h1>This Is Auth Layout</h1>
-          <main>{children}</main>
-        </ReactQueryProvider>
-      </body> */}
-
        <body className="bg-gray-50 text-gray-900 flex min-h-screen items-center justify-center">
-        {/* <SessionProvider> */}
-
         <NextAuthProvider>
           <ReactQueryProvider>
+            
             {children}
-            <Toaster toastOptions={{
+
+            {/* <ClientToaster /> */}
+            {/* <Toaster toastOptions={{
               style: {
                 background: 'black', // Example: set background to red
                 color: 'white', // Example: set text color to white
               },
               className: 'my-global-toast', // Optional: add a custom class
-            }} />
+            }} /> */}
           </ReactQueryProvider>
-        </NextAuthProvider>
-
-          
-
-        {/* </SessionProvider> */}
-        
+        </NextAuthProvider>        
         
       </body>
     </html>

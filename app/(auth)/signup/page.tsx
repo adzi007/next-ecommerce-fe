@@ -8,10 +8,11 @@ import { useState } from "react";
 import { SignupFormData, signupSchema } from "@/lib/validation/signup-schema";
 import { useRegister } from "@/lib/api/auth";
 import { useRouter } from 'next/navigation'
+import { Spinner } from "@/components/ui/spinner";
 
 export default function Page() {
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
    const router = useRouter()
 
   const form = useForm<SignupFormData>({
@@ -21,13 +22,11 @@ export default function Page() {
 
 
   const { mutate: signupAction, isPending, isSuccess } = useRegister({
-    onSuccess: (data) => {
-
-      console.log("response register api", data);
-      alert("Register Success!")
+    onSuccess: () => {
+      // console.log("response register api", data);
+      // alert("Register Success!")
       form.reset();
-
-      router.push('/login')
+      router.push('/login?registered=true')
 
     }
   })
@@ -35,17 +34,17 @@ export default function Page() {
 
   async function onSubmit(data: SignupFormData) {
 
-    setLoading(true);
+    // setLoading(true);
 
     try {
      
       signupAction(data)
 
     } catch (error) {
+
       console.error(error);
-    } finally {
-      setLoading(false);
-    }
+
+    } 
   }
 
   return (
@@ -62,7 +61,7 @@ export default function Page() {
           className="space-y-4">
           <div>
             <label htmlFor="input-name">Name</label>
-            <Input placeholder="Full name" id="input-name" {...form.register("name")} disabled={loading} />
+            <Input placeholder="Full name" id="input-name" {...form.register("name")} disabled={isPending} />
             {form.formState.errors.name && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.name.message}
@@ -72,7 +71,7 @@ export default function Page() {
 
           <div>
             <label htmlFor="input-email">Email</label>
-            <Input placeholder="Email address" id="input-email" type="email" {...form.register("email")} disabled={loading} />
+            <Input placeholder="Email address" id="input-email" type="email" {...form.register("email")} disabled={isPending} />
             {form.formState.errors.email && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.email.message}
@@ -82,7 +81,7 @@ export default function Page() {
 
           <div>
             <label htmlFor="input-password">Password</label>
-            <Input placeholder="Password" id="input-password" type="password" {...form.register("password")} disabled={loading} />
+            <Input placeholder="Password" id="input-password" type="password" {...form.register("password")} disabled={isPending} />
             {form.formState.errors.password && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.password.message}
@@ -92,7 +91,7 @@ export default function Page() {
 
           <div>
             <label htmlFor="input-confirm-password">Confirm Password</label>
-            <Input placeholder="Confirm Password" id="input-confirm-password" type="password" {...form.register("confirmPassword")} disabled={loading} />
+            <Input placeholder="Confirm Password" id="input-confirm-password" type="password" {...form.register("confirmPassword")} disabled={isPending} />
             {form.formState.errors.confirmPassword && (
               <p className="text-sm text-red-500 mt-1">
                 {form.formState.errors.confirmPassword.message}
@@ -100,9 +99,9 @@ export default function Page() {
             )}
           </div>
 
-          <Button type="submit" className="w-full" disabled={loading} >
+          <Button type="submit" className="w-full" disabled={isPending} >
             {/* Sign Up */}
-            {loading ? "Creating..." : "Sign Up"}
+            {isPending ? <><Spinner /> Submiting... </>  : "Sign Up"}
           </Button>
         </form>
       </CardContent>
