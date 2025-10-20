@@ -6,17 +6,38 @@ import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import { signOut } from "next-auth/react"
 
+import { dummyCart } from "@/data/cart";
+import { useEffect } from "react";
+
 export function Navbar() {
+
   const items = useCartStore((state) => state.items);
   const totalItems = items.reduce((sum, i) => sum + i.qty, 0);
 
-  const { data: session } = useSession()
+  const { data: session } = useSession() 
 
-  // console.log("session >>> ", session);
-  // console.log("items >>> ", items);
+  useEffect(() => {
 
-  // console.log("userId >>> ", session?.user.id);
-  
+    if(session){
+
+      console.log("get cart data", dummyCart);
+
+      dummyCart.data.map((row) => {
+        useCartStore.getState().addItem({ 
+          name: row.name, 
+          image:row.image, 
+          id:row.id, 
+          qty: 
+          row.qty, 
+          priceSell:row.price, 
+          slug:row.slug })
+      })
+      
+    }
+
+
+    
+  }, [session])
   
 
   return (

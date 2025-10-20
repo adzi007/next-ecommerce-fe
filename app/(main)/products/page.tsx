@@ -1,4 +1,4 @@
-import { getProducts } from "./actions";
+// import { getProducts } from "./actions";
 import { ProductList } from "./components/product-list";
 import { dummyProducts } from "@/data/products";
 

@@ -11,16 +11,13 @@ interface CartItemProps extends Product {
 
 export default function CartProductItem({ name, image, id, qty, priceSell, slug }:CartItemProps) {
 
-    const [localQty, setlocalQty] = useState(0)
+    const [localQty, setlocalQty] = useState(qty)
 
-    useEffect(() => {
-
-        setlocalQty(qty)
-        useCartStore.getState().addItem({ name, image, id, qty, priceSell, slug })
-        console.log("added on moun", qty);
-        
-        
-    }, [])
+    // useEffect(() => {
+    //     setlocalQty(qty)
+    //     useCartStore.getState().addItem({ name, image, id, qty, priceSell, slug })
+    //     console.log("added on moun", qty);
+    // }, [])
 
     const updateQtyHandle = (e: ChangeEvent<HTMLInputElement>) => {
 
