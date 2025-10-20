@@ -1,7 +1,8 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaClient } from "./generated/prisma"
+// import { PrismaClient } from "./generated/prisma"
+import { PrismaClient } from "@prisma/client"
 import bcrypt from "bcryptjs"
 
 const db = new PrismaClient()
@@ -33,6 +34,28 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+
+    // JWT Strategy
+
+    async jwt({ token, user }) {
+      // `user` is available only on first login
+      if (user) token.id = user.id
+      return token
+    },
+    async session({ session, token }) {
+      if (token?.id) session.user.id = token.id
+      return session
+    },
+
+    // Database Strategy
+    // async session({ session, user }) {
+    //   if (user) session.user.id = user.id
+    //   return session
+    // },
+
+
+  },
   session: { strategy: "jwt" },
   pages: {
     signIn: "/login",

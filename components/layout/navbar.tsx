@@ -14,6 +14,9 @@ export function Navbar() {
 
   // console.log("session >>> ", session);
   // console.log("items >>> ", items);
+
+  // console.log("userId >>> ", session?.user.id);
+  
   
 
   return (
@@ -31,6 +34,7 @@ export function Navbar() {
             )}
           </Link>
           { session && <Button variant="link" onClick={() => signOut({ callbackUrl: "/login" })} className="hover:cursor-pointer">Logout</Button> }
+          { !session && <Link href="/login" className="relative">Login</Link> }
         </nav>
       </div>
     </header>

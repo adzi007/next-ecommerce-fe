@@ -93,6 +93,15 @@ npx prisma migrate dev --name drop_col_status_in_user
 
 ```
 
+Sync database
+```bash
+# to update your schema.prisma
+npx prisma db pull
+
+# to apply changes
+npx prisma db push
+```
+
 **5. Fixing Sync Problems (Drift / Shadow Errors)**
 
 ```bash
