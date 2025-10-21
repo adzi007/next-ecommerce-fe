@@ -33,10 +33,7 @@ export function Navbar() {
           priceSell:row.price, 
           slug:row.slug })
       })
-      
     }
-
-
     
   }, [session])
   
