@@ -14,7 +14,7 @@ It focuses on implementing **MVP (Minimum Viable Product)** features for an e-co
 |**Framework**|[Next.js 15](https://nextjs.org/) with App Router|
 |**Language**|TypeScript|
 |**Styling**|Tailwind CSS v4, `clsx`, `tailwind-merge`|
-|**UI Components**|Radix UI, Lucide React Icons|
+|**UI Components**|Shadcn, Radix UI, Lucide React Icons|
 |**State Management**|Zustand|
 |**Form Handling**|React Hook Form + Zod|
 |**Data Fetching**|React Query (TanStack Query)|
