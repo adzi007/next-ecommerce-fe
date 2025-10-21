@@ -12,6 +12,9 @@ export default function Page() {
     const router = useRouter()
     const [hasShownToast, setHasShownToast] = useState(false)
 
+
+   
+
     useEffect(() => {
         const registered = searchParams.get("registered")
 
@@ -29,6 +32,18 @@ export default function Page() {
             router.replace("/login")
         }
     }, [searchParams, hasShownToast, router])
+
+     const error = searchParams.get("error");
+
+    useEffect(() => {
+        if (error === "OAuthAccountNotLinked") {
+            toast.error("Account not linked", {
+                description:
+                "You've previously signed up with a password. Please use your email and password instead.",
+                duration: 10000
+            });
+        }
+    }, [error]);
     
 
     return (

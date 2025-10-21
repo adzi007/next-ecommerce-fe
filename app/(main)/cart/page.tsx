@@ -5,9 +5,16 @@ import { MoveRight } from "lucide-react"
 import CartProductItem from "./components/CartProductItem";
 import { dummyCart } from "@/data/cart";
 import { SummeryOrder } from "./components/SummeryOrder";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 
-export default function Page() {
+export default async function Page() {
+
+  const session = await getServerSession(authOptions)
+  
+  if (!session) redirect("/login")
 
   const cartData = dummyCart
 

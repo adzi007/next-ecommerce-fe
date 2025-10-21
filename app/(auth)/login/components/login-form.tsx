@@ -4,11 +4,16 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useForm, Controller } from "react-hook-form"
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { toast } from "sonner"
+// import { toast } from "sonner"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useLogin } from "@/lib/api/auth"
+// import { useLogin } from "@/lib/api/auth"
 import { signIn } from "next-auth/react"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { Spinner } from "@/components/ui/spinner";
+import { FcGoogle } from "react-icons/fc";
 
 const formLoginSchema = z.object({
     email : z.email("Invalid email address"),
@@ -16,6 +21,10 @@ const formLoginSchema = z.object({
 })
 
 export default function LoginForm() {
+
+    const [isPendingLogin, setIsPendingLogin] = useState(false)
+
+    const router = useRouter()
 
     const form = useForm<z.infer<typeof formLoginSchema>>({
         resolver: zodResolver(formLoginSchema),
@@ -26,14 +35,36 @@ export default function LoginForm() {
     })
 
     async function onSubmit(data: z.infer<typeof formLoginSchema>) {
-        // submitLogin(data)
-        // await signIn("credentials", { data, redirect: true, callbackUrl: "/" })
-        await signIn("credentials", {
+
+        setIsPendingLogin(true)
+
+        // console.log("clicking login....");
+        const result = await signIn("credentials", {
             email: data.email,
             password: data.password,
-            redirect: true,
+            redirect: false,
             callbackUrl: "/",
         })
+
+        if (result?.error) {
+
+            setIsPendingLogin(false)
+            console.error("Login failed:", result.error);
+
+            toast.error("Login failed", {
+                description: result.error,
+                position: "top-center",
+            });
+
+        } else {
+            setIsPendingLogin(false)
+            console.log("Login successful!");
+            router.push(result?.url || "/");
+        }
+    }
+
+    function googleLogin() {
+        signIn("google", { callbackUrl: "/" })
     }
 
     return (
@@ -80,27 +111,15 @@ export default function LoginForm() {
 
                 </FieldGroup>
 
-                {/* <div>
-                    <Input placeholder="Email address" type="email" defaultValue="" {...register("email", { required:true })} />
-                    { errors.email && <span className="text-red-500">Please type your registered email properly</span> }
-                </div>
-                <div>
-                    <Input placeholder="Password" type="password"  defaultValue="" {...register("password", {required: true})} />
-                    { errors.password && <span className="text-red-500">Harus masukin password</span> }
-                </div> */}
-
-                {/* <SubmitButton disabled={false} /> */}
-
-                {/* <Button type="submit" className="w-full">
-                    Login
-                </Button> */}
             </form>
 
-            <Button type="submit" form="form-rhf-demo" className="mt-3">
-                {/* { isPendingLogin ? "Loading Login...":"Login" } */}
-               
-                Submit
+            <Button type="submit" form="form-rhf-demo" className="mt-6! hover:cursor-pointer w-full" disabled={isPendingLogin}>
+                { isPendingLogin ? <> <Spinner /> Login</>:"Login" }
             </Button>
+
+            <span className="my-1 block text-center">Or</span>
+
+            <Button type="button" variant={"outline"} className="w-full hover:cursor-pointer" onClick={googleLogin}><FcGoogle className="size-5" /> Login with Google</Button>
         </>
         
         

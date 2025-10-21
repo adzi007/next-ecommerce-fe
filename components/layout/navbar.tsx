@@ -20,7 +20,8 @@ export function Navbar() {
 
     if(session){
 
-      console.log("get cart data", dummyCart);
+      // console.log("user >>> ", session.user.name);
+      // console.log("get cart data", dummyCart);
 
       dummyCart.data.map((row) => {
         useCartStore.getState().addItem({ 
