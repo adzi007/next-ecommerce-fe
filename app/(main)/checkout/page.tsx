@@ -1,4 +1,3 @@
-"use client"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
@@ -6,20 +5,21 @@ import { MoveRight } from "lucide-react"
 // import CartProductItem from "../cart/components/CartProductItem";
 import { dummyCart } from "@/data/cart";
 import { SummeryOrder } from "../cart/components/SummeryOrder";
-// import { getServerSession } from "next-auth";
-// import { authOptions } from "@/lib/auth";
-// import { redirect } from "next/navigation";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useState } from "react";
+import FormCheckout from "./components/FormCheckout";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+// import { useState } from "react";
 
 
-export default function Page() {
+export default async function Page() {
 
-  const [activeTabs, setactiveTabs] = useState("account")
+  // const [activeTabs, setactiveTabs] = useState("account")
 
-  // const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions)
   
-  // if (!session) redirect("/login")
+  if (!session) redirect("/login")
 
   const cartData = dummyCart
 
@@ -31,27 +31,8 @@ export default function Page() {
 
             <div className="flex flex-col lg:w-4/6 w-full gap-4">
 
-            <Tabs defaultValue={activeTabs} className="w-[400px]">
-              <TabsList>
-                <TabsTrigger value="account">Account</TabsTrigger>
-                <TabsTrigger value="password">Password</TabsTrigger>
-              </TabsList>
-              <TabsContent value="account">Make changes to your account here.</TabsContent>
-              <TabsContent value="password">Change your password here.</TabsContent>
-            </Tabs>
+            <FormCheckout />
 
-            <Button variant={"default"} onClick={() => setactiveTabs("password")}>Next</Button>
-
-                {/* {cartData.data.map((item) => 
-                  <CartProductItem 
-                    key={item.id}
-                    name={item.name} 
-                    image={item.image} 
-                    id={item.id} 
-                    qty={item.qty} 
-                    priceSell={item.price} 
-                    slug={item.slug}  /> 
-                )} */}
 
             </div>
 
