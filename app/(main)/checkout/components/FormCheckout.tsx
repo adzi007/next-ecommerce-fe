@@ -35,10 +35,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import FormPayment from "./FormPayment";
 
 
 export default function FormCheckout() {
-    const [activeTabs, setactiveTabs] = useState("account")
+    const [activeTabs, setactiveTabs] = useState(1) //shipping, payment, order_summery
     
     return (
     <>
@@ -70,8 +71,7 @@ export default function FormCheckout() {
 
             <CardContent>
                 <div id="default-tab-content" className="mt-3">
-                    <div className="rounded-lg" id="profile" role="tabpanel" aria-labelledby="profile-tab"> 
-
+                    <div className={ (activeTabs == 1 ? "d-block ":"hidden " ) + "rounded-lg"} id="profile" role="tabpanel" aria-labelledby="profile-tab"> 
                         <form>
                             <h1 className="text-lg font-semibold mb-5">Delivery Detail</h1>
 
@@ -217,20 +217,26 @@ export default function FormCheckout() {
                                 </div>
                             </div>
 
-                            <button type="submit" className="text-white mt-6 bg-gray-800 hover:bg-gray-900 font-medium rounded-md w-full hover:cursor-pointer px-5 py-2.5 text-center">Continue To Payment</button>
-                        
+                            <button 
+                                type="button" 
+                                onClick={() => setactiveTabs(2)}
+                                className="text-white mt-6 bg-gray-800 hover:bg-gray-900 font-medium rounded-md w-full hover:cursor-pointer px-5 py-2.5 text-center">
+                                    Continue To Payment
+                            </button>
 
                         </form>
-
-
                     </div>
-                    <div className="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                            This is some placeholder content the <strong className="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. 
-                            Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps claxsses to control the content visibility and styling.
-                        </p>
+
+                    <div className={ (activeTabs == 2 ? "d-block ":"hidden " ) + "rounded-lg"} id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                        <FormPayment />
+                        <button 
+                            type="button" 
+                            onClick={() => setactiveTabs(3)}
+                            className="text-white mt-6 bg-gray-800 hover:bg-gray-900 font-medium rounded-md w-full hover:cursor-pointer px-5 py-2.5 text-center">
+                                Checkout
+                        </button>
                     </div>
-                    <div className="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <div className={ (activeTabs == 3 ? "d-block ":"hidden " ) + "rounded-lg"} id="settings" role="tabpanel" aria-labelledby="settings-tab">
                         <p className="text-sm text-gray-500 dark:text-gray-400">
                             This is some placeholder content the <strong className="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. 
                             Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps claxsses to control the content visibility and styling.

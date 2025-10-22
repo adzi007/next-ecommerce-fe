@@ -120,3 +120,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+ .payment-element-container {
+      border: none;
+      /* You might also want to remove padding if present, depending on your design */
+      padding: 0;
+    }
+.AccordionItem, .p-AccordionItem, .p-AccordionItem--selected, .AccordionItem--selected {
+    border: 0 !important;
+    box-shadow: unset !important;
+    padding: 0 !important;
+}

@@ -9,18 +9,19 @@ It focuses on implementing **MVP (Minimum Viable Product)** features for an e-co
 
 ## 🚀 Tech Stack
 
-|Category|Tools / Libraries|
-|---|---|
-|**Framework**|[Next.js 15](https://nextjs.org/) with App Router|
-|**Language**|TypeScript|
-|**Styling**|Tailwind CSS v4, `clsx`, `tailwind-merge`|
-|**UI Components**|Shadcn, Radix UI, Lucide React Icons|
-|**State Management**|Zustand|
-|**Form Handling**|React Hook Form + Zod|
-|**Data Fetching**|React Query (TanStack Query)|
-|**Auth**|NextAuth.js with Prisma Adapter (Credentials + Google)|
-|**Database ORM**|Prisma (MySQL / MariaDB)|
-|**Utilities**|Axios, BcryptJS, Sonner (toast notifications)|
+| Category             | Tools / Libraries                                      |
+| -------------------- | ------------------------------------------------------ |
+| **Framework**        | [Next.js 15](https://nextjs.org/) with App Router      |
+| **Language**         | TypeScript                                             |
+| **Styling**          | Tailwind CSS v4, `clsx`, `tailwind-merge`              |
+| **UI Components**    | Radix UI, Lucide React Icons                           |
+| **State Management** | Zustand                                                |
+| **Form Handling**    | React Hook Form + Zod                                  |
+| **Data Fetching**    | React Query (TanStack Query)                           |
+| **Auth**             | NextAuth.js with Prisma Adapter (Credentials + Google) |
+| **Database ORM**     | Prisma (MySQL / MariaDB)                               |
+| **Utilities**        | Axios, BcryptJS, Sonner (toast notifications)          |
+| **Payment Gateway**  | Stripe                                                 |
 
 ## 🧩 Purpose
 
@@ -236,13 +237,16 @@ npx prisma migrate deploy
 ---
 ## 🔧 Environment Variables
 
-| Variable               | Description                       |
-| ---------------------- | --------------------------------- |
-| `DATABASE_URL`         | MySQL / MariaDB connection string |
-| `GOOGLE_CLIENT_ID`     | Google OAuth client ID            |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret        |
-| `NEXTAUTH_SECRET`      | Secret key for session signing    |
-| `NEXTAUTH_URL`         | Public URL for NextAuth callbacks |
+
+| Variable                        | Description                       |
+| ------------------------------- | --------------------------------- |
+| `DATABASE_URL`                  | MySQL / MariaDB connection string |
+| `GOOGLE_CLIENT_ID`              | Google OAuth client ID            |
+| `GOOGLE_CLIENT_SECRET`          | Google OAuth client secret        |
+| `NEXTAUTH_SECRET`               | Secret key for session signing    |
+| `NEXTAUTH_URL`                  | Public URL for NextAuth callbacks |
+| `NEXT_PUBLIC_STRIPE_PUBLIC_KEY` | Stripe public key                 |
+| `STRIPE_SECRET_KEY`             | Stripe secret key                 |
 
 ---
 ## 🧩 Authentication
