@@ -27,25 +27,23 @@ export default async function Page() {
     <div className="max-w-7xl mx-auto px-4 py-10">
           <h1 className="text-3xl font-bold mb-8">Checkout Order</h1>
 
-          <div className="flex w-full gap-4 lg:flex-nowrap flex-wrap">
+          <div className="flex w-full gap-12 lg:flex-nowrap flex-wrap">
 
-            <div className="flex flex-col lg:w-4/6 w-full gap-4">
-
-            <FormCheckout />
-
-
+            <div className="flex flex-col lg:w-4/6 w-full">
+              <FormCheckout />
             </div>
 
             <div className="flex lg:w-2/6 w-full">
-              <Card className="w-full">
+
+              {/* <Card className="w-full rounded-md bg-transparent shadow-none border-0">
                 <CardHeader>
-                  <CardTitle>Order Summery</CardTitle>
+                  <CardTitle>Your Cart</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent> */}
 
                   <SummeryOrder />
 
-                </CardContent>
+                {/* </CardContent>
 
                 <CardFooter className="flex-col gap-2">
                   <Button type="button" className="w-full">
@@ -57,7 +55,7 @@ export default async function Page() {
                     Continue Shopping <MoveRight strokeWidth={1.5} />
                   </Link>
                 </CardFooter>
-              </Card>
+              </Card> */}
             </div>
 
           </div>
