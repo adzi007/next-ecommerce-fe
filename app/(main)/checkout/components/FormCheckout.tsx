@@ -1,21 +1,10 @@
 "use client"
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react";
 import { FaRegCircleCheck, FaCircleCheck } from "react-icons/fa6";
-
-import {
-  CheckIcon,
-  CreditCardIcon,
-  InfoIcon,
-  MailIcon,
-  SearchIcon,
-  StarIcon,
-  PhoneIcon,
-  Smartphone,
-  ChevronDownIcon
-} from "lucide-react"
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { MailIcon, ChevronDownIcon, ChevronsUpDown, Check } from "lucide-react"
 
 
 import {
@@ -34,12 +23,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import FormPayment from "./FormPayment";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+
+const frameworks = [
+  {
+    value: "next.js",
+    label: "Next.js",
+  },
+  {
+    value: "sveltekit",
+    label: "SvelteKit",
+  },
+  {
+    value: "nuxt.js",
+    label: "Nuxt.js",
+  },
+  {
+    value: "remix",
+    label: "Remix",
+  },
+  {
+    value: "astro",
+    label: "Astro",
+  },
+]
 
 
 export default function FormCheckout() {
+
     const [activeTabs, setactiveTabs] = useState(1) //shipping, payment, order_summery
+
+    const [open, setOpen] = useState(false)
+    const [value, setValue] = useState("")
     
     return (
     <>
@@ -71,6 +90,7 @@ export default function FormCheckout() {
 
             <CardContent>
                 <div id="default-tab-content" className="mt-3">
+
                     <div className={ (activeTabs == 1 ? "d-block ":"hidden " ) + "rounded-lg"} id="profile" role="tabpanel" aria-labelledby="profile-tab"> 
                         <form>
                             <h1 className="text-lg font-semibold mb-5">Delivery Detail</h1>
@@ -129,7 +149,7 @@ export default function FormCheckout() {
                             <div className="grid gap-3 mb-6 md:grid-cols-3 mt-7">
                                 <div>
                                     <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
-                                    <Select>
+                                    {/* <Select>
                                         <SelectTrigger className="w-full h-11!">
                                             <SelectValue placeholder="Select a country"/>
                                         </SelectTrigger>
@@ -143,7 +163,54 @@ export default function FormCheckout() {
                                             <SelectItem value="pineapple">Pineapple</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
-                                    </Select>
+                                    </Select> */}
+
+                                    <Popover open={open} onOpenChange={setOpen}>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={open}
+                                            className="w-full h-11 justify-between"
+                                            >
+                                            {value
+                                                ? frameworks.find((framework) => framework.value === value)?.label
+                                                : "Select country..."}
+                                            <ChevronsUpDown className="opacity-50" />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-[200px] p-0">
+                                            <Command>
+                                            <CommandInput placeholder="Search framework..." className="h-9" />
+                                            <CommandList>
+                                                <CommandEmpty>No framework found.</CommandEmpty>
+                                                <CommandGroup>
+                                                {frameworks.map((framework) => (
+                                                    <CommandItem
+                                                    key={framework.value}
+                                                    value={framework.value}
+                                                    onSelect={(currentValue) => {
+                                                        setValue(currentValue === value ? "" : currentValue)
+                                                        setOpen(false)
+                                                    }}
+                                                    >
+                                                    {framework.label}
+                                                    {/* <Check
+                                                        className={cn(
+                                                        "ml-auto",
+                                                        value === framework.value ? "opacity-100" : "opacity-0"
+                                                        )}
+                                                    /> */}
+                                                    </CommandItem>
+                                                ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                            </Command>
+                                        </PopoverContent>
+                                    </Popover>
+
+
+
                                 </div>
                                 <div>
                                     <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City</label>
@@ -229,13 +296,30 @@ export default function FormCheckout() {
 
                     <div className={ (activeTabs == 2 ? "d-block ":"hidden " ) + "rounded-lg"} id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                         <FormPayment />
-                        <button 
-                            type="button" 
-                            onClick={() => setactiveTabs(3)}
-                            className="text-white mt-6 bg-gray-800 hover:bg-gray-900 font-medium rounded-md w-full hover:cursor-pointer px-5 py-2.5 text-center">
-                                Checkout
-                        </button>
+                        
+                        <div className="flex w-full mt-6 justify-between">
+
+                            <Button 
+                                type="button" 
+                                variant={"ghost"}
+                                onClick={() => setactiveTabs(1)}
+                                className="border h-11 hover:cursor-pointer">
+                                   <MdOutlineKeyboardBackspace className="size-6" /> Back To Shipping
+                            </Button>
+
+                            <Button 
+                                type="button" 
+                                variant={"default"}
+                                onClick={() => setactiveTabs(3)}
+                                className="h-11 hover:cursor-pointer">
+                                    Checkout
+                            </Button>
+
+                        </div>
+
+ 
                     </div>
+
                     <div className={ (activeTabs == 3 ? "d-block ":"hidden " ) + "rounded-lg"} id="settings" role="tabpanel" aria-labelledby="settings-tab">
                         <p className="text-sm text-gray-500 dark:text-gray-400">
                             This is some placeholder content the <strong className="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. 

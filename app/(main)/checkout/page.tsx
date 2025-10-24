@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
-import { MoveRight } from "lucide-react"
+// import { Button } from "@/components/ui/button";
+// import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+// import Link from "next/link";
+// import { MoveRight } from "lucide-react"
 // import CartProductItem from "../cart/components/CartProductItem";
-import { dummyCart } from "@/data/cart";
-import { SummeryOrder } from "../cart/components/SummeryOrder";
+// import { dummyCart } from "@/data/cart";
+// import { SummeryOrder } from "../cart/components/SummeryOrder";
 import FormCheckout from "./components/FormCheckout";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -22,7 +22,7 @@ export default async function Page() {
   
   if (!session) redirect("/login")
 
-  const cartData = dummyCart
+  // const cartData = dummyCart
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">

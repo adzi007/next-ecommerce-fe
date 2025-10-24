@@ -43,17 +43,17 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
             <form className="space-y-4">
                 <div>
                     <label>Card number</label>
-                    <CardNumberElement className="w-full border p-2 rounded-md" />
+                    <CardNumberElement className="w-full border p-3 rounded-md" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                     <label>Expiration date</label>
-                        <CardExpiryElement className="w-full border p-2 rounded-md" />
+                        <CardExpiryElement className="w-full border p-3 rounded-md" />
                     </div>
                     <div>
                     <label>CVC</label>
-                        <CardCvcElement className="w-full border p-2 rounded-md" />
+                        <CardCvcElement className="w-full border p-3 rounded-md" />
                     </div>
                 </div>
 
