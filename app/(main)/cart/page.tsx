@@ -56,7 +56,7 @@ export default async function Page() {
                   </Button>
                   <span className="font-normal text-gray-500 dark:text-gray-400"> or </span>
                  
-                  <Link href="/products" className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">
+                  <Link href="/products" className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline">
                     Continue Shopping <MoveRight strokeWidth={1.5} />
                   </Link>
                 </CardFooter>

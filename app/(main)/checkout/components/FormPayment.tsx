@@ -52,6 +52,8 @@ export default function FormPayment() {
 
     return (
         <div>
+            <h1 className="text-xl font-semibold mb-2">Payment</h1>
+            <p className="mb-4 text-gray-500">All transaction are secure and encryped</p>
             <Elements
                 stripe={stripePromise}
                 options={options}
