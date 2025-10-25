@@ -17,9 +17,9 @@ export default function TabFormPayment() {
     const appearance: StripeElementsOptions["appearance"] = {
         theme: 'stripe', // or 'stripe', 'night', or 'none' for full control
         variables: {
-            colorPrimary: '#4f46e5', // indigo-600
+            colorPrimary: '#4f46e5',
             colorBackground: '#ffffff',
-            colorText: '#111827', // gray-900
+            colorText: '#111827',
             borderRadius: '0',
         },
         rules: {
@@ -28,7 +28,7 @@ export default function TabFormPayment() {
             boxShadow: 'unset'
         },
         '.Input': {
-            border: '1px solid #d1d5db', // gray-300
+            border: '1px solid #d1d5db',
             borderRadius: '0.5rem',
             padding: '0.5rem 0.75rem',
             fontSize: '1rem',
@@ -38,7 +38,7 @@ export default function TabFormPayment() {
             boxShadow: '0 0 0 1px #4f46e5',
         },
         '.Input--invalid': {
-            borderColor: '#ef4444', // red-500
+            borderColor: '#ef4444',
         },
         },
     }
@@ -47,7 +47,7 @@ export default function TabFormPayment() {
         mode: "payment",
         amount: convertToSubcurrency(amount),
         currency: "usd",
-        appearance, // 👈 add your custom styles here
+        appearance,
     }
 
     return (

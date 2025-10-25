@@ -11,7 +11,8 @@ import { checkoutSchema, CheckoutSchema } from "@/schemas/checkoutSchema"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { shippingOptionsDummy, countriesDummy } from "@/data/shipping"
+// import { shippingOptionsDummy, countriesDummy } from "@/data/shipping"
+import { getCountries, getCountriesCode, getShippingOptions } from "../data/shipping"
 
 const countries = [
   { label: "United States", value: "us" },
@@ -33,6 +34,11 @@ interface ShippingOption {
     desc: string;
 }
 
+interface PhoneCountryCode {
+    label: string;
+    value: string;
+}
+
 export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab: number) => void }) {
 
     // const [open, setOpen] = useState(false)
@@ -43,24 +49,25 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
     const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
     const [countryOptions, setCountryOptions] = useState<CountryOption[]>([])
 
+    const [phoneCountryCode, setphoneCountryCode] = useState<PhoneCountryCode[]>([])
+
+    const [selectedCountryCode, setSelectedCountryCode] = useState<PhoneCountryCode>({
+        label:"Indonesia", value:"+62"
+    })
+
     useEffect(() => {
 
-        // Simulate async data fetch
-        setTimeout(() => {
-            setShippingOptions(shippingOptionsDummy)
-            setCountryOptions(countriesDummy)
-        }, 300)
+        (async () => {
+            const [ships, countries, coubtriesCode] = await Promise.all([getShippingOptions(), getCountries(), getCountriesCode()]);
+            setShippingOptions(ships as ShippingOption[]);
+            setCountryOptions(countries as CountryOption[] );
+            setphoneCountryCode(coubtriesCode as PhoneCountryCode[] )
+        })();
      
     }, [])
     
 
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        watch,
-        formState: { errors },
-    } = useForm<CheckoutSchema>({
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<CheckoutSchema>({
         resolver: zodResolver(checkoutSchema),
     })
 
@@ -107,15 +114,17 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
                         <InputGroupAddon>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                            <InputGroupButton variant="ghost" className="!pr-1.5 text-xs">
-                                <img src="/icons/countries/indonesia.svg" alt="" className="size-6" /> +62{" "}
+                            <InputGroupButton variant="ghost" className="!pr-1.5 text-sm">
+                                { selectedCountryCode.value + " "}
                                 <ChevronDownIcon className="size-3" />
                             </InputGroupButton>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="[--radius:0.95rem]">
-                            {countries.map((c) => (
-                                <DropdownMenuItem key={c.value}>{c.label}</DropdownMenuItem>
-                            ))}
+                                {phoneCountryCode.map((c) => (
+                                    <DropdownMenuItem key={c.value} onSelect={ () => setSelectedCountryCode(c)}>
+                                        {c.label + ' ('+c.value+')'}
+                                    </DropdownMenuItem>
+                                ))}
                             </DropdownMenuContent>
                         </DropdownMenu>
                         </InputGroupAddon>

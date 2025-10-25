@@ -1,30 +1,18 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import {
-  useStripe,
-  useElements,
-  PaymentElement,
   CardNumberElement, 
   CardExpiryElement, 
   CardCvcElement,
-  AddressElement,
 } from "@stripe/react-stripe-js";
 import { convertToSubcurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import { CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
-
-    const stripe = useStripe();
-    const elements = useElements();
-    const [errorMessage, setErrorMessage] = useState<string>();
     const [clientSecret, setClientSecret] = useState("");
-    const [loading, setLoading] = useState(false);
-
     useEffect(() => {
         fetch("/api/create-payment-intent", {
         method: "POST",
@@ -39,7 +27,6 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
 
     return (
         <div className="payment-element-container">
-            {/* {clientSecret && <PaymentElement />} */}
             
             {clientSecret && 
             
@@ -69,14 +56,10 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
                         <Checkbox id="terms" />
                         <Label htmlFor="terms">By Clicking "Confirm Payment" I agree to the companies term of services</Label>
                     </div>
-
-                    
                 </form>
-                
-                }
+            }
         </div>
     );
-
 }
 
 export default CheckoutPage;

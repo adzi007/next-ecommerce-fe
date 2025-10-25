@@ -12,3 +12,12 @@ export const countriesDummy = [
   { label: "France", value: "fr" },
   { label: "Indonesia", value: "id" },
 ]
+
+export const phoneCountryCodeDummy = [
+  { label: "United States", value: "+1" },
+  { label: "United Kingdom", value: "+60" },
+  { label: "Australia", value: "+21" },
+  { label: "Germany", value: "+9" },
+  { label: "France", value: "+10" },
+  { label: "Indonesia", value: "+62" },
+]
