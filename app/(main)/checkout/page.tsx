@@ -10,19 +10,13 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import SummeryCart from "./components/SummeryCart";
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-// import { useState } from "react";
-
 
 export default async function Page() {
-
-  // const [activeTabs, setactiveTabs] = useState("account")
 
   const session = await getServerSession(authOptions)
   
   if (!session) redirect("/login")
 
-  // const cartData = dummyCart
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">

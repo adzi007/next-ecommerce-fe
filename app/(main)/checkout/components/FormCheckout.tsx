@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/input-group"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent } from "@/components/ui/card";
-import FormPayment from "./FormPayment";
+import TabFormPayment from "./TabFormPayment";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
@@ -57,20 +57,21 @@ export default function FormCheckout() {
             <ul className="flex text-sm font-medium text-center justify-between" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
                 <li className="w-[-webkit-fill-available] flex items-center after:content-[''] after:ml-1 after:border-b-2 after:border-gray-300 after:w-full" role="presentation">
                     <button className="inline-flex items-center gap-2 py-4 ps-0 pe-4 rounded-t-lg" id="profile-tab" type="button" role="tab">
-                        <FaCircleCheck className="size-5" />
+                        { activeTabs >= 1 ? <FaCircleCheck className="size-5" />:<FaRegCircleCheck className="size-5" /> } 
                         <span className="w-max text-md">Shipping Information</span>
                     </button>
                 </li>
                 <li className="w-[-webkit-fill-available] flex items-center after:content-[''] after:ml-1 after:border-b-2 after:border-gray-300 after:w-full" role="presentation">
                     <button className="inline-flex items-center gap-2 p-4 rounded-t-lg" id="profile-tab" type="button" role="tab">
                         {/* <FaRegCircleCheck className="size-5" /> */}
-                        <FaCircleCheck className="size-5" />
+                        {/* <FaCircleCheck className="size-5" /> */}
+                        { activeTabs >= 2 ? <FaCircleCheck className="size-5" />:<FaRegCircleCheck className="size-5" /> } 
                         <span className="w-max text-md">Payment</span>
                     </button>
                 </li>
                 <li className="flex items-center justify-end" role="presentation">
                     <button className="inline-flex items-center gap-2 p-4 rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="settings-tab" type="button" role="tab" aria-selected="false">
-                         <FaRegCircleCheck className="size-5" />
+                         { activeTabs >= 3 ? <FaCircleCheck className="size-5" />:<FaRegCircleCheck className="size-5" /> } 
                         <span className="w-max text-md">Order Complete</span>
                     </button>
                 </li>
@@ -102,7 +103,8 @@ export default function FormCheckout() {
                     </div>
 
                     <div className={ (activeTabs == 2 ? "d-block ":"hidden " ) + "rounded-lg"} id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                        <FormPayment />
+                        
+                        <TabFormPayment />
                         
                         <div className="flex w-full mt-6 justify-between">
 
@@ -124,7 +126,6 @@ export default function FormCheckout() {
 
                         </div>
 
- 
                     </div>
 
                     <div className={ (activeTabs == 3 ? "d-block ":"hidden " ) + "rounded-lg"} id="settings" role="tabpanel" aria-labelledby="settings-tab">

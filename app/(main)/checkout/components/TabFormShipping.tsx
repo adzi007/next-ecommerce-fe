@@ -8,9 +8,10 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ChevronDownIcon, ChevronsUpDown, MailIcon } from "lucide-react"
 import { checkoutSchema, CheckoutSchema } from "@/schemas/checkoutSchema"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { shippingOptionsDummy, countriesDummy } from "@/data/shipping"
 
 const countries = [
   { label: "United States", value: "us" },
@@ -21,13 +22,37 @@ const countries = [
   { label: "Indonesia", value: "id" },
 ]
 
-export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab: number) => void }) {
-    const [open, setOpen] = useState(false)
-    // const [value, setValue] = useState("")
+interface CountryOption {
+    label: string;
+    value: string;
+}
 
+interface ShippingOption {
+    id: string;
+    label: string;
+    desc: string;
+}
+
+export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab: number) => void }) {
+
+    // const [open, setOpen] = useState(false)
     
     const [countryOpen, setCountryOpen] = useState(false)
     const [selectedCountry, setSelectedCountry] = useState("")
+
+    const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
+    const [countryOptions, setCountryOptions] = useState<CountryOption[]>([])
+
+    useEffect(() => {
+
+        // Simulate async data fetch
+        setTimeout(() => {
+            setShippingOptions(shippingOptionsDummy)
+            setCountryOptions(countriesDummy)
+        }, 300)
+     
+    }, [])
+    
 
     const {
         register,
@@ -41,7 +66,7 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
 
     const onSubmit = (data: CheckoutSchema) => {
         console.log("Form Data:", data)
-        // setActiveTabs(2)
+        setActiveTabs(2)
     }
 
   const deliveryMethod = watch("deliveryMethod")
@@ -55,18 +80,18 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
             <div className="grid gap-6 md:grid-cols-2">
                 <div>
                     <label className="block mb-2 text-sm font-medium">First Name</label>
-                    <Input {...register("firstName")} className="py-5 px-3" />
+                    <Input {...register("firstName")} className={`py-5 px-3 ${ errors.firstName && 'border-red-500' }`}  />
                     {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
                 </div>
                 <div>
                     <label className="block mb-2 text-sm font-medium">Last Name</label>
-                    <Input {...register("lastName")} className="py-5 px-3" />
+                    <Input {...register("lastName")} className={`py-5 px-3 ${ errors.lastName && 'border-red-500' }`} />
                     {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
                 </div>
 
                 <div>
                     <label className="block mb-2 text-sm font-medium">Email</label>
-                    <InputGroup className="h-11">
+                    <InputGroup className={`h-11 py-5 px-3 ${ errors.email && 'border-red-500' }`}>
                         <InputGroupInput type="email" {...register("email")} placeholder="example@email.com" />
                         <InputGroupAddon>
                         <MailIcon />
@@ -77,7 +102,7 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
 
                 <div>
                     <label className="block mb-2 text-sm font-medium">Phone Number</label>
-                    <InputGroup className="h-11">
+                    <InputGroup className={`h-11 py-5 px-3 ${ errors.email && 'border-red-500' }`}>
                         <InputGroupInput type="tel" {...register("phone")} placeholder="8123456789" />
                         <InputGroupAddon>
                         <DropdownMenu>
@@ -102,7 +127,7 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
             {/* --- Address --- */}
             <div>
                 <label className="block mb-2 text-sm font-medium">Address</label>
-                <Input {...register("address")} className="py-5 px-3" />
+                <Input {...register("address")} className={`py-5 px-3 ${ errors.email && 'border-red-500' }`} />
                 {errors.address && <p className="text-red-500 text-sm">{errors.address.message}</p>}
             </div>
 
@@ -112,34 +137,36 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
                     <label className="block mb-2 text-sm font-medium">Country</label>
                     <Popover open={countryOpen} onOpenChange={setCountryOpen}>
                         <PopoverTrigger asChild>
-                        <Button variant="outline" role="combobox" className="w-full h-11 justify-between">
-                            {selectedCountry
-                            ? countries.find((c) => c.value === selectedCountry)?.label
-                            : "Select country..."}
+                        <Button variant="outline" role="combobox" className={`w-full h-11 justify-between ${ errors.country && 'border-red-500' }`}>
+                            { selectedCountry
+                                ? countryOptions.find((c) => c.value === selectedCountry)?.label
+                                : "Select country..."
+                            }
                             <ChevronsUpDown className="opacity-50" />
                         </Button>
                         </PopoverTrigger>
+
                         <PopoverContent className="w-[200px] p-0">
-                        <Command>
-                            <CommandInput placeholder="Search country..." className="h-9" />
-                            <CommandList>
-                            <CommandEmpty>No country found.</CommandEmpty>
-                            <CommandGroup>
-                                {countries.map((c) => (
-                                <CommandItem
-                                    key={c.value}
-                                    onSelect={() => {
-                                    setSelectedCountry(c.value)
-                                    setValue("country", c.label)
-                                    setCountryOpen(false)
-                                    }}
-                                >
-                                    {c.label}
-                                </CommandItem>
-                                ))}
-                            </CommandGroup>
-                            </CommandList>
-                        </Command>
+                            <Command>
+                                <CommandInput placeholder="Search country..." className="h-9" />
+                                <CommandList>
+                                    <CommandEmpty>No country found.</CommandEmpty>
+                                    <CommandGroup>
+                                        {countryOptions.map((c) => (
+                                            <CommandItem
+                                                key={c.value}
+                                                onSelect={() => {
+                                                    setSelectedCountry(c.value)
+                                                    setValue("country", c.label)
+                                                    setCountryOpen(false)
+                                                }}
+                                            >
+                                                {c.label}
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                </CommandList>
+                            </Command>
                         </PopoverContent>
                     </Popover>
                     {errors.country && <p className="text-red-500 text-sm">{errors.country.message}</p>}
@@ -147,13 +174,13 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
 
                 <div>
                     <label className="block mb-2 text-sm font-medium">City</label>
-                    <Input {...register("city")} className="py-5 px-3" />
+                    <Input {...register("city")} className={`py-5 px-3 ${ errors.city && 'border-red-500'}`} />
                     {errors.city && <p className="text-red-500 text-sm">{errors.city.message}</p>}
                 </div>
 
                 <div>
                     <label className="block mb-2 text-sm font-medium">Zip Code</label>
-                    <Input {...register("zipCode")} className="py-5 px-3" />
+                    <Input {...register("zipCode")} className={`py-5 px-3 ${ errors.zipCode && 'border-red-500'}`} />
                     {errors.zipCode && <p className="text-red-500 text-sm">{errors.zipCode.message}</p>}
                 </div>
             </div>
@@ -162,24 +189,21 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
             <h1 className="text-lg font-semibold mt-8 mb-5">Delivery Methods</h1>
 
             <div className="grid gap-4 md:grid-cols-3">
-                {[
-                    { id: "dhl", label: "$15 - DHL Fast Delivery", desc: "Get it by Tomorrow" },
-                    { id: "fedex", label: "Free Delivery - FedEx", desc: "Get it by Friday" },
-                    { id: "express", label: "$49 - Express Delivery", desc: "Get it today" },
-                ].map((opt) => (
+
+                {shippingOptions.map((opt) => (
 
                     <label
                         key={opt.id}
                         className={`rounded-lg border p-4 cursor-pointer ${
-                        deliveryMethod === opt.id ? "border-primary bg-gray-100" : "border-gray-200"
-                        }`}
+                        deliveryMethod === opt.id ? "border-blue-600" : "border-gray-200"
+                        } ${errors.deliveryMethod && 'border-red-500'}`}
                     >
                         <div className="flex items-start">
                         <input
                             type="radio"
                             value={opt.id}
                             {...register("deliveryMethod")}
-                            className="h-4 w-4 text-primary focus:ring-2"
+                            className="h-4 w-4 text-primary"
                         />
                         <div className="ml-3">
                             <p className="font-medium">{opt.label}</p>
