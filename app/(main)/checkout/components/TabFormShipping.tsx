@@ -13,15 +13,16 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 // import { shippingOptionsDummy, countriesDummy } from "@/data/shipping"
 import { getCountries, getCountriesCode, getShippingOptions } from "../data/shipping"
+import { useShippingFormStore } from "../store/checkout.store"
 
-const countries = [
-  { label: "United States", value: "us" },
-  { label: "United Kingdom", value: "uk" },
-  { label: "Australia", value: "au" },
-  { label: "Germany", value: "de" },
-  { label: "France", value: "fr" },
-  { label: "Indonesia", value: "id" },
-]
+// const countries = [
+//   { label: "United States", value: "us" },
+//   { label: "United Kingdom", value: "uk" },
+//   { label: "Australia", value: "au" },
+//   { label: "Germany", value: "de" },
+//   { label: "France", value: "fr" },
+//   { label: "Indonesia", value: "id" },
+// ]
 
 interface CountryOption {
     label: string;
@@ -73,6 +74,9 @@ export default function TabFormShipping({ setActiveTabs }: { setActiveTabs: (tab
 
     const onSubmit = (data: CheckoutSchema) => {
         console.log("Form Data:", data)
+
+        useShippingFormStore.getState().setShippingData(data)
+
         setActiveTabs(2)
     }
 
