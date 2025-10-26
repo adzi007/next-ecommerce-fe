@@ -51,9 +51,12 @@ export default async function Page() {
                 </CardContent>
 
                 <CardFooter className="flex-col gap-2">
-                  <Button type="button" className="w-full">
-                    Process to Checkout
-                  </Button>
+                  <Link href="/checkout" className="w-full">
+                    <Button type="button" className="w-full hover:cursor-pointer">
+                      Process to Checkout
+                    </Button>
+                  </Link>
+                  
                   <span className="font-normal text-gray-500 dark:text-gray-400"> or </span>
                  
                   <Link href="/products" className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline">

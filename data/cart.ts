@@ -3,7 +3,7 @@ export const dummyCart = {
         {
             id: 2,
             product_id: 12,
-            name: "Herbal Face Wash",
+            name: "Herbal Face Wash Lorem Ipsum 250 ml",
             slug: "herbal-face-wash",
             image: "https://placehold.co/200",
             price: 20000,
