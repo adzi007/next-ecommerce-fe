@@ -19,12 +19,12 @@ export default async function Page() {
   const cartData = dummyCart
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
+    <div className="w-3/5 mx-auto px-4 py-10">
           <h1 className="text-3xl font-bold mb-8">Cart</h1>
 
           <div className="flex w-full gap-4 lg:flex-nowrap flex-wrap">
 
-            <div className="flex flex-col lg:w-4/6 w-full gap-4">
+            <div className="flex flex-col lg:w-4/6 w-full gap-4 min-h-[700px]">
 
                 {cartData.data.map((item) => 
                   <CartProductItem 
@@ -40,7 +40,7 @@ export default async function Page() {
             </div>
 
             <div className="flex lg:w-2/6 w-full">
-              <Card className="w-full">
+              <Card className="w-full h-fit">
                 <CardHeader>
                   <CardTitle>Order Summery</CardTitle>
                 </CardHeader>

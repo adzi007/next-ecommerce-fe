@@ -10,7 +10,7 @@ export default async function Page() {
   if (!session) redirect("/login")
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
+    <div className="w-3/5 mx-auto px-4 py-10">
           <h1 className="text-3xl font-bold mb-8">Checkout Order</h1>
           <div className="flex w-full gap-6 lg:flex-nowrap flex-wrap">
             <div className="flex flex-col lg:w-4/6 w-full">

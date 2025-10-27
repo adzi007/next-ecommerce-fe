@@ -4,6 +4,7 @@ import { ReactQueryProvider } from "@/lib/react-query-provider";
 import { Navbar } from "@/components/layout/navbar";
 import "../globals.css";
 import { NextAuthProvider } from "../providers/session-provider";
+import Footer from "@/components/layout/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
           <ReactQueryProvider>
             <Navbar />
             <main>{children}</main>
+            <Footer />
           </ReactQueryProvider>
         </NextAuthProvider>
         
