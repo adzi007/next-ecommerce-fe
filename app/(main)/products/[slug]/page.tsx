@@ -7,6 +7,7 @@ import { FiHeart } from "react-icons/fi";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge";
+import ProductGallery from "../components/ProductGallery";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }>}) {
 
@@ -28,6 +29,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             label: "8GB + 128GB",
         },
     ];
+
+    const images = [
+    { id: 1, src: "https://picsum.photos/id/1011/600/600", alt: "Product front view" },
+    { id: 2, src: "https://picsum.photos/id/1018/600/600", alt: "Product side view" },
+    { id: 3, src: "https://picsum.photos/id/1025/600/600", alt: "Product top view" },
+    { id: 4, src: "https://picsum.photos/id/1035/600/600", alt: "Product detail view" },
+    { id: 5, src: "https://picsum.photos/id/1042/600/600", alt: "Product packaging" },
+    ]
     
 
     return (
@@ -57,8 +66,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             <section className="p-8 bg-white rounded-md shadow-md md:py-16">
                 <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
                     <div className="lg:grid lg:grid-cols-2 lg:gap-8">
-                        <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
-                            <img className="w-full" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
+
+                        <div className="w-full">
+                            {/* <img className="w-full" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" /> */}
+                             <ProductGallery images={images} />
                         </div>
 
                         <div className="mt-6 sm:mt-8 lg:mt-0">
@@ -143,24 +154,29 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                 </div>
                             </div>                         
 
-                            <div className="mt-6 gap-1.5 flex items-center">
-                                <a href="#" title="" className="flex items-center w-5/12 justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100" role="button" >
-                                    {/* <FiHeart size={19} className="me-2" /> */}
-                                    Checkout
-                                </a>
+                            <div className="mt-6 gap-3 flex flex-col">
 
-                                <a href="#" title="" className="text-white mt-4 w-5/12 sm:mt-0 bg-blue-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center" role="button" >
+                                <a href="#" title="" className="text-white mt-4 bg-blue-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 focus:outline-none flex items-center justify-center" role="button" >
                                     <TbShoppingCartPlus size={19} className="me-2" />
                                     Add to cart
                                 </a>
-                                <a href="#" title="" className="flex items-center w-1/12 justify-center py-2.5 px-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100" role="button" >
-                                    <FiHeart size={19} />
+
+                                <a href="#" title="" className="flex items-center justify-center py-2.5 px-5 font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100" role="button" >
+                                    Buy Now
                                 </a>
-                                <a href="#" title="" className="flex items-center w-1/12 justify-center py-2.5 px-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100" role="button" >
-                                    {/* <FiHeart size={19} /> */}
-                                    <IoShareSocialOutline size={19} />
-                                </a>
+
+                                <div className="flex justify-center gap-4">
+                                    <a href="#" title="" className="flex items-center justify-center py-2.5 px-1 text-sm font-medium text-gray-900 gap-4" role="button" >
+                                        <FiHeart size={19} /> Add To Whistlist 
+                                    </a>
+                                    <a href="#" title="" className="flex items-center justify-center py-2.5 px-1 text-sm font-medium text-gray-900 gap-4" role="button" >
+                                        <IoShareSocialOutline size={19} /> Share This Product 
+                                    </a>
+                                </div>
+                               
                             </div>
+
+                             
 
                             <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
