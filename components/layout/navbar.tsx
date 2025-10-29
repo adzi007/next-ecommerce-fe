@@ -7,9 +7,9 @@ import { Button } from "../ui/button";
 import { signOut } from "next-auth/react"
 
 import { dummyCart } from "@/data/cart";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
-import { SearchIcon } from "lucide-react";
+import { ChevronDown, ChevronUp, SearchIcon } from "lucide-react";
 import Autocomplete from "../ui/autocomplete";
 import { PiShoppingCart } from "react-icons/pi";
 import { FaAngleDown } from "react-icons/fa6";
@@ -41,6 +41,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import ModalSearch from "@/app/(main)/products/components/ModalSearch";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 
 export function Navbar() {
 
@@ -69,6 +70,40 @@ export function Navbar() {
     }
     
   }, [session])
+
+  const [openCategory, setOpenCategory] = useState<string | null>(null)
+
+  // 🧭 Menu structure: some with sub-items, some without
+  const menuItems = [
+    {
+      title: "Home",
+      href: "/",
+    },
+    {
+      title: "Products",
+      href: "/products",
+    },
+    {
+      title: "Best Seller",
+      href: "/products",
+    },
+    {
+      title: "Category",
+      subItems: [
+        { title: "Phones", href: "/products/phones" },
+        { title: "Laptops", href: "/products/laptops" },
+        { title: "Headphones", href: "/products/headphones" },
+      ],
+    },
+    {
+      title: "About Us",
+      href: "/about",
+    },
+    {
+      title: "FAQs",
+      href: "/contact",
+    },
+  ]
   
 
   return (
@@ -83,13 +118,67 @@ export function Navbar() {
               <DrawerContent>
                 <div className="h-full w-full">
                   <DrawerHeader>
-                    <DrawerTitle>Left Drawer</DrawerTitle>
+                    <DrawerTitle>Menu</DrawerTitle>
                     <DrawerDescription>This drawer slides in from the left.</DrawerDescription>
                   </DrawerHeader>
-                  <div className="p-4">
-                    <p className="text-sm text-muted-foreground">
-                      Great for navigation menus or sidebars.
-                    </p>
+                  <div className="p-4" id="drawer-menu">
+
+                    {menuItems.map((item, i) => {
+                      // 📁 Item with sub-items (Collapsible)
+                      if (item.subItems && item.subItems.length > 0) {
+                        return (
+                          <Collapsible
+                            key={i}
+                            open={openCategory === item.title}
+                            onOpenChange={() =>
+                              setOpenCategory(
+                                openCategory === item.title ? null : item.title
+                              )
+                            }
+                            className="border-b py-2"
+                          >
+                            <CollapsibleTrigger className="flex w-full items-center justify-between text-left text-base font-medium py-2">
+                              {item.title}
+                              {openCategory === item.title ? (
+                                <ChevronUp className="w-4 h-4" />
+                              ) : (
+                                <ChevronDown className="w-4 h-4" />
+                              )}
+                            </CollapsibleTrigger>
+
+                            <CollapsibleContent>
+                              <ul className="pl-4 mt-1 space-y-1">
+                                {item.subItems.map((sub, j) => (
+                                  <li key={j}>
+                                    <DrawerClose asChild>
+                                      <Link
+                                      href={sub.href}
+                                      className="block text-gray-900 py-1 transition"
+                                    >
+                                      {sub.title}
+                                    </Link>
+                                    </DrawerClose>
+                                    
+                                  </li>
+                                ))}
+                              </ul>
+                            </CollapsibleContent>
+                          </Collapsible>
+                        )
+                      }
+
+                      // 🔗 Single-level item (direct link)
+                      return (
+                        <div key={i} className="border-b py-2">
+                          <Link
+                            href={item.href!}
+                            className="block w-full text-base font-medium py-2 hover:text-primary transition"
+                          >
+                            {item.title}
+                          </Link>
+                        </div>
+                      )
+                    })}
                   </div>
                   <DrawerFooter>
                     <DrawerClose asChild>

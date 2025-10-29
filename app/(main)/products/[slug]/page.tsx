@@ -12,7 +12,6 @@ import ProductGallery from "../components/ProductGallery";
 export default async function Page({ params }: { params: Promise<{ slug: string }>}) {
 
     const { slug } = await params
-
     // console.log("slug >>> ", slug);
 
     const options = [
@@ -41,30 +40,30 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
     return (
 
-        <div className="w-3/5 mx-auto px-4 py-8">
+        <div className="lg:w-3/5 w-full mx-auto lg:px-4 px-0 lg:py-8 py-4">
 
-            <Breadcrumb className="mb-6">
-                <BreadcrumbList>
+            <Breadcrumb className="lg:mb-6 mb-3 lg:px-0 px-4">
+                <BreadcrumbList className="flex-nowrap">
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link className="text-lg" href="/">Home</Link>
+                            <Link className="lg:text-lg text-base" href="/">Product</Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
-                                <Link className="text-lg" href="/components">Components</Link>
+                                <Link className="lg:text-lg text-base line-clamp-1" href="/components">Upper Wear</Link>
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbPage className="text-lg">Breadcrumb</BreadcrumbPage>
+                        <BreadcrumbPage className="lg:text-lg text-base line-clamp-1">Apple iMac 24" All-In-One Computer, Apple M1, 8GB RAM, 256GB SSD, Mac OS, Pink</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
 
-            <section className="py-6 px-6 bg-white rounded-md shadow-md">
-                <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+            <section className="lg:py-6 py-4 lg:px-6 px-2 bg-white rounded-md shadow-md">
+                <div className="max-w-screen-xl lg:px-4 px-2 mx-auto 2xl:px-0">
                     <div className="lg:grid lg:grid-cols-2 gap-14">
 
                         <div className="w-full">
@@ -110,12 +109,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                             <div className="mt-8">
                                 <p className="font-semibold text-gray-700">Select Option:</p>
-                                <ul className="grid w-full gap-1 md:grid-cols-4 mt-2">
+                                <ul className="grid w-full gap-1 lg:grid-cols-4 grid-cols-3 mt-2">
                                     <li>
                                         <input type="radio" id="hosting-small" name="hosting" value="hosting-small" className="hidden peer" required />
                                         <label htmlFor="hosting-small" className="inline-flex items-center justify-between w-full p-2 h-full text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">                           
                                             <div className="block">
-                                                <div className="w-full font-semibold">0-50 MB</div>
+                                                <div className="w-full lg:font-semibold fornt-medium">0-50 MB</div>
                                             </div>
                                         </label>
                                     </li>
@@ -123,7 +122,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                         <input type="radio" id="hosting-big" name="hosting" value="hosting-big" className="hidden peer" />
                                         <label htmlFor="hosting-big" className="inline-flex items-center justify-between w-full p-2 h-full text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
                                             <div className="block">
-                                                <div className="w-full font-semibold">500-1000 MB</div>
+                                                <div className="w-full lg:font-semibold fornt-medium">500-1000 MB</div>
                                             </div>
                                         </label>
                                     </li>

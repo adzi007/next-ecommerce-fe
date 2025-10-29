@@ -54,7 +54,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
       </div>
 
       {/* Thumbnails */}
-      <div className="mt-4 grid grid-cols-5 gap-2">
+      <div className="grid grid-cols-5 gap-2">
         {images.map((img, index) => (
           <button
             key={img.id}
