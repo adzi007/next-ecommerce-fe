@@ -9,12 +9,12 @@ export default async function Page() {
   const products = dummyProducts.data;
 
   return (
-    <div className="w-3/5 mx-auto px-4 py-10">
+    <div className="lg:w-3/5 w-full mx-auto lg:px-4 px-2 py-10">
       {/* <h1 className="text-3xl font-bold mb-8">Products</h1> */}
 
       <div className="flex gap-4">
 
-        <div className="w-xs">
+        <div className="w-xs lg:block hidden">
           <div className="space-y-1 mb-4">
           <h4 className="text-lg leading-none font-medium">Filter</h4>
 
@@ -26,9 +26,6 @@ export default async function Page() {
           <div className="w-full mb-4">
               <div className="space-y-1">
                 <h4 className="text-lg leading-none font-medium">All Products</h4>
-                {/* <p className="text-muted-foreground">
-                  An open-source UI component library.
-                </p> */}
               </div>
               <Separator className="my-4" />
               <div className="flex h-5 items-center space-x-4 text-sm">

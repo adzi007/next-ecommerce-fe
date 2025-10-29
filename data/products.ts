@@ -2,7 +2,7 @@ export const dummyProducts = {
     data: [
         {
             id: 32,
-            name: "Air Conditioner 1.5 Ton",
+            name: "Air Conditioner 1.5 Ton Oliavera 250 ml",
             slug: "air-conditioner-1-5-ton",
             priceBase: 3500000,
             priceSell: 3700000,

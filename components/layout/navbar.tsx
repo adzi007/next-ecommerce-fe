@@ -11,6 +11,35 @@ import { useEffect } from "react";
 import { Input } from "../ui/input";
 import { SearchIcon } from "lucide-react";
 import Autocomplete from "../ui/autocomplete";
+import { PiShoppingCart } from "react-icons/pi";
+import { FaAngleDown } from "react-icons/fa6";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { FiSearch } from "react-icons/fi";
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 
 export function Navbar() {
 
@@ -43,39 +72,96 @@ export function Navbar() {
 
   return (
     <header className="w-full border-b bg-white sticky top-0 z-50">
-      <div className="w-3/5 mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="font-bold text-lg">MyShop</Link>
-        <nav className="flex items-center gap-6">
-          {/* <form className="relative">
-            <Input
-              id="search-product"
-              name="search"
-              className="peer h-9 ps-8 pe-2"
-              placeholder={"Search Product"}
-              type="search"
-            />
-            <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-2 peer-disabled:opacity-50">
-              <SearchIcon size={16} />
-            </div>
-          </form> */}
-          {/* <div className="w-[200px]"> */}
-            <Autocomplete
-            // value={field.value}
-            // onChange={field.onChange}
-          />
-          {/* </div> */}
+      <div className="lg:w-3/5 w-full lg:mx-auto lg:px-4 px-2 h-16 flex items-center justify-between">
+        <nav className="flex items-center lg:gap-6 gap-3">
+          <div className="lg:hidden block">
+            <Drawer direction="left">
+              <DrawerTrigger asChild>
+                <Button variant="ghost" className="p-0! m-0"><HiOutlineMenuAlt1 className="size-7 mt-0.5" /></Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                <div className="h-full w-full">
+                  <DrawerHeader>
+                    <DrawerTitle>Left Drawer</DrawerTitle>
+                    <DrawerDescription>This drawer slides in from the left.</DrawerDescription>
+                  </DrawerHeader>
+                  <div className="p-4">
+                    <p className="text-sm text-muted-foreground">
+                      Great for navigation menus or sidebars.
+                    </p>
+                  </div>
+                  <DrawerFooter>
+                    <DrawerClose asChild>
+                      <Button>Close</Button>
+                    </DrawerClose>
+                  </DrawerFooter>
+                </div>
+              </DrawerContent>
+            </Drawer>
+          </div>
+
+          <Link href="/" className="font-bold lg:text-2xl text-lg me-5">MyShop</Link>
+          <div className="lg:flex hidden items-center gap-6">
+            <Link href="/products" className="hover:text-blue-600 font-medium">Products</Link>
+            <Link href="/cart" className="relative font-medium">Best Seller</Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="font-medium flex items-center gap-1">Category <FaAngleDown size={12} className="mb-1" /></DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem>Subscription</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Link href="/cart" className="relative font-medium">About</Link>
+            <Link href="/cart" className="relative font-medium">FAQs</Link>
+          </div>
           
-          <Link href="/products" className="hover:text-blue-600">Products</Link>
-          <Link href="/cart" className="relative">
-            Cart
+
+        </nav>
+        
+        <nav className="flex items-center lg:gap-6 gap-4">
+          
+          <div className="lg:block hidden">
+          <Autocomplete   />
+          </div>
+
+          <Button variant="ghost" className="p-0! m-0"><FiSearch className="size-6" /></Button>
+          
+         
+          <Link href="/cart" className="relative flex">
+            <PiShoppingCart className="lg:size-7 size-6" />
             {totalItems > 0 && (
-              <span className="ml-1 px-2 py-0.5 text-xs bg-blue-600 text-white rounded-full">
+              <span className="absolute size-5 flex justify-center items-center text-xs -top-1 -right-3 bg-blue-600 text-white rounded-full">
                 {totalItems}
               </span>
             )}
           </Link>
-          { session && <Button variant="link" onClick={() => signOut({ callbackUrl: "/login" })} className="hover:cursor-pointer">Logout</Button> }
+
+          {/* { session && <Button variant="link" onClick={() => signOut({ callbackUrl: "/login" })} className="hover:cursor-pointer">Logout</Button> } */}
+
           { !session && <Link href="/login" className="relative">Login</Link> }
+
+          { session &&
+            <DropdownMenu>
+              <DropdownMenuTrigger className="font-medium flex items-center gap-1 hover:cursor-pointer">
+                <Avatar className="lg:w-8 w-7 lg:h-8 h-7">
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })} >Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          }
         </nav>
       </div>
     </header>

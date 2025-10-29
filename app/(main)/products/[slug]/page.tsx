@@ -63,9 +63,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 </BreadcrumbList>
             </Breadcrumb>
 
-            <section className="p-8 bg-white rounded-md shadow-md md:py-16">
+            <section className="py-6 px-6 bg-white rounded-md shadow-md">
                 <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
-                    <div className="lg:grid lg:grid-cols-2 lg:gap-8">
+                    <div className="lg:grid lg:grid-cols-2 gap-14">
 
                         <div className="w-full">
                             {/* <img className="w-full" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" /> */}
@@ -178,7 +178,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
                              
 
-                            <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+                            <hr className="mt-2 mb-4 border-gray-200 dark:border-gray-800" />
 
                             <p className="mb-6 text-gray-500 dark:text-gray-400">
                                 Studio quality three mic array for crystal clear calls and voice
