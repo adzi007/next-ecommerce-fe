@@ -40,6 +40,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
+import ModalSearch from "@/app/(main)/products/components/ModalSearch";
 
 export function Navbar() {
 
@@ -128,7 +129,8 @@ export function Navbar() {
           <Autocomplete   />
           </div>
 
-          <Button variant="ghost" className="p-0! m-0"><FiSearch className="size-6" /></Button>
+          {/* <Button variant="ghost" className="lg:hidden block p-0! m-0"><FiSearch className="size-6" /></Button> */}
+          <ModalSearch />
           
          
           <Link href="/cart" className="relative flex">
