@@ -1,4 +1,5 @@
 "use client"
+import { usePathname } from "next/navigation"
 import { convertToSubcurrency } from "@/lib/utils";
 import { CardCvcElement, CardExpiryElement, CardNumberElement, Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -84,6 +85,10 @@ export default function PaymentStep() {
 
     }, []);
 
+//     useEffect(() => {
+//     window.scrollTo({ top: 0, behavior: "smooth" })
+//   }, []) // runs when this tab mounts
+
     
 
     return (
@@ -128,19 +133,19 @@ export default function PaymentStep() {
 
             </Elements>
 
-            <div className="flex w-full mt-6 justify-between">
+            <div className="flex lg:flex-row flex-col gap-3 w-full mt-6 justify-between">
                 <Button 
                     type="button" 
                     variant={"ghost"}
                     onClick={navigateToShippingStep}
-                    className="border h-11 hover:cursor-pointer rounded-sm">
+                    className="border h-11 hover:cursor-pointer rounded-sm lg:order-1 order-2">
                     <MdOutlineKeyboardBackspace className="size-6" /> Back To Shipping
                 </Button>
                 <Button 
                     type="button" 
                     variant={"default"}
                     // onClick={() => setActiveTabs(3)}
-                    className="h-11 hover:cursor-pointer rounded-sm">
+                    className="h-11 hover:cursor-pointer rounded-sm lg:order-2 order-1">
                         Confirm Payment $570.68
                 </Button>
             </div>

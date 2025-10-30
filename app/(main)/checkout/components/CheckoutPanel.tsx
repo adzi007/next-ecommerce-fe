@@ -25,9 +25,9 @@ export default function CheckoutPanel() {
 
             { activeTabs == 2 && <AddressCard /> }
 
-            <Card className="w-full rounded-md">
+            <Card className="w-full rounded-md lg:py-6 py-4">
 
-                <CardContent>
+                <CardContent className="lg:px-6 px-3"> 
 
                     <div id="default-tab-content" className="mt-3">
                         <div className={ (activeTabs == 1 ? "d-block ":"hidden " ) + "rounded-lg"} id="profile" role="tabpanel" aria-labelledby="profile-tab"> 

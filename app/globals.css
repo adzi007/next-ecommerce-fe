@@ -131,3 +131,7 @@
     box-shadow: unset !important;
     padding: 0 !important;
 }
+
+[data-slot="pagination-link"] > span {
+  display: block !important;
+}

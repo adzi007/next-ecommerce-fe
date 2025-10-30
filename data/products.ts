@@ -6,7 +6,7 @@ export const dummyProducts = {
             slug: "air-conditioner-1-5-ton",
             priceBase: 3500000,
             priceSell: 3700000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1011/600/600",
             category: {
                 name: "Electronics",
                 slug: "electronics"
@@ -18,7 +18,7 @@ export const dummyProducts = {
             slug: "herbal-hair-oil",
             priceBase: 25000,
             priceSell: 30000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1012/600/600",
             category: {
                 name: "Beverages",
                 slug: "beverages"
@@ -30,7 +30,7 @@ export const dummyProducts = {
             slug: "womens-summer-dress",
             priceBase: 180000,
             priceSell: 220000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1011/600/600",
             category: {
                 name: "Food",
                 slug: "food"
@@ -42,7 +42,7 @@ export const dummyProducts = {
             slug: "sony-playstation-5",
             priceBase: 7000000,
             priceSell: 7500000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1012/600/600",
             category: {
                 name: "Sayuran",
                 slug: "sayuran"
@@ -54,7 +54,7 @@ export const dummyProducts = {
             slug: "lipton-iced-tea-1-5l",
             priceBase: 3500,
             priceSell: 4000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1013/600/600",
             category: {
                 name: "Drinks",
                 slug: "drinks"
@@ -66,7 +66,7 @@ export const dummyProducts = {
             slug: "microwave-oven-20l",
             priceBase: 900000,
             priceSell: 950000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1014/600/600",
             category: {
                 name: "Electronics",
                 slug: "electronics"
@@ -78,7 +78,7 @@ export const dummyProducts = {
             slug: "vitamin-c-serum",
             priceBase: 30000,
             priceSell: 35000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1015/600/600",
             category: {
                 name: "Beverages",
                 slug: "beverages"
@@ -90,7 +90,7 @@ export const dummyProducts = {
             slug: "mens-formal-shirt",
             priceBase: 150000,
             priceSell: 200000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1016/600/600",
             category: {
                 name: "Food",
                 slug: "food"
@@ -102,7 +102,7 @@ export const dummyProducts = {
             slug: "dell-xps-13-laptop",
             priceBase: 12000000,
             priceSell: 12500000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1020/600/600",
             category: {
                 name: "Sayuran",
                 slug: "sayuran"
@@ -114,7 +114,7 @@ export const dummyProducts = {
             slug: "pepsi-1l",
             priceBase: 2500,
             priceSell: 3000,
-            image: "https://placehold.co/260",
+            image: "https://picsum.photos/id/1018/600/600",
             category: {
                 name: "Drinks",
                 slug: "drinks"
