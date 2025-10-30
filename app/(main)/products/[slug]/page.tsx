@@ -7,27 +7,12 @@ import { FiHeart } from "react-icons/fi";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge";
-import ProductGallery from "../components/ProductGallery";
+import ProductGallery from "./components/ProductGallery";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }>}) {
 
     const { slug } = await params
     // console.log("slug >>> ", slug);
-
-    const options = [
-        {
-            value: "4gb",
-            label: "4GB + 64GB",
-        },
-        {
-            value: "6gb",
-            label: "6GB + 128GB",
-        },
-        {
-            value: "8gb",
-            label: "8GB + 128GB",
-        },
-    ];
 
     const images = [
     { id: 1, src: "https://picsum.photos/id/1011/600/600", alt: "Product front view" },

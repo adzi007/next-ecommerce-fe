@@ -56,23 +56,20 @@ export default function ModalSearch() {
 
                 <div className="py-2 px-3 overflow-y-auto" id="search-auto-complete">
 
-                    {query === "" ? (
-                        <p className="text-gray-500 text-sm">Start typing to search...</p>
-
-                    ) : results.length > 0 ? (
+                    {query === "" ? ( <p className="text-gray-500 text-sm">Start typing to search...</p> ) : results.length > 0 ? (
 
                         <ul className="divide-y">
 
                             {results.map((item, index) => (
                                 <li
-                                key={index}
-                                className="py-3 cursor-pointer hover:bg-gray-100 px-2 rounded-md transition"
-                                onClick={() => {
-                                    console.log(`Selected: ${item}`)
-                                    setOpen(false)
-                                }}
+                                    key={index}
+                                    className="py-3 cursor-pointer hover:bg-gray-100 px-2 rounded-md transition"
+                                    onClick={() => {
+                                        console.log(`Selected: ${item}`)
+                                        setOpen(false)
+                                    }}
                                 >
-                                {item}
+                                    {item}
                                 </li>
                             ))}
                             
