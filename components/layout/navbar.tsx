@@ -247,7 +247,10 @@ export function Navbar() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/orders">Orders</Link>
+                  
+                </DropdownMenuItem>
                 <DropdownMenuItem>Team</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })} >Logout</DropdownMenuItem>
               </DropdownMenuContent>
