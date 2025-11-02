@@ -21,7 +21,7 @@ export default function Page() {
 
         {/* Product Content */}
         <main className="w-full">
-            <ToolbarOrder />
+            {/* <ToolbarOrder /> */}
             <OrderList />
           {/* <ProductList /> */}
         </main>

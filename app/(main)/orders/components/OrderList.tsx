@@ -8,10 +8,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Hourglass, Truck, Check, X } from "lucide-react"
 import PaginationOrder from "./PaginationOrder"
+import Link from "next/link"
 
 const orders = [
   {
-    id: "#FWB127364372",
+    id: "FWB127364372",
     date: "20.12.2023",
     price: "$4,756",
     status: "Pre-order",
@@ -19,7 +20,7 @@ const orders = [
     icon: Hourglass,
   },
   {
-    id: "#FWB125467980",
+    id: "FWB125467980",
     date: "11.12.2023",
     price: "$499",
     status: "In transit",
@@ -27,7 +28,7 @@ const orders = [
     icon: Truck,
   },
   {
-    id: "#FWB139485607",
+    id: "FWB139485607",
     date: "08.12.2023",
     price: "$85",
     status: "Confirmed",
@@ -35,7 +36,7 @@ const orders = [
     icon: Check,
   },
   {
-    id: "#FWB146284623",
+    id: "FWB146284623",
     date: "26.09.2023",
     price: "$180",
     status: "Cancelled",
@@ -47,7 +48,7 @@ const orders = [
 export default function OrderList() {
   return (
     <div className="flex flex-col gap-10 mb-8 w-full">
-      <section className="bg-white py-4 px-4 dark:bg-gray-900 md:py-10">
+      <section className="bg-white py-4 px-4 md:py-10 border rounded-md shadow-sm">
         <div className="mx-auto max-w-5xl space-y-6">
           {/* Header */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -85,13 +86,13 @@ export default function OrderList() {
           </div>
 
           {/* Orders List */}
-          <div className="space-y-6 divide-y divide-gray-200">
+          <div className="space-y-6 divide-y divide-gray-300">
             {orders.map((order) => {
               const Icon = order.icon
               return (
-                <Card key={order.id} className="border-none shadow-none pt-4">
-                  <CardContent className="flex flex-wrap items-center gap-y-4">
-                    <OrderDetail label="Order ID" value={<a href="#" className="hover:underline">{order.id}</a>} />
+                <Card key={order.id} className="border-x-0 border-t-0 last:border-b-0 rounded-none shadow-none pt-4">
+                  <CardContent className="flex flex-wrap lg:items-end items-center gap-y-4 px-2">
+                    <OrderDetail label="Order ID" value={<Link href={"/orders/" + order.id} className="hover:underline">{order.id}</Link>} />
                     <OrderDetail label="Date" value={order.date} />
                     <OrderDetail label="Price" value={order.price} />
                     <OrderDetail
@@ -115,19 +116,22 @@ export default function OrderList() {
                       }
                     />
 
-                    <div className="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-3">
+                    <div className="w-full grid grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-3">
                       {order.status === "Cancelled" || order.status === "Confirmed" ? (
-                        <Button variant="default" size="sm" className="lg:w-auto">
+                        <Button variant="default" size="sm" className="lg:w-auto hover:cursor-pointer">
                           Order Again
                         </Button>
                       ) : (
-                        <Button variant="destructive" size="sm" className="lg:w-auto">
+                        <Button variant="destructive" size="sm" className="lg:w-auto hover:cursor-pointer">
                           Cancel Order
                         </Button>
                       )}
-                      <Button variant="outline" size="sm" className="lg:w-auto">
-                        View Details
-                      </Button>
+                      <Link href={"/orders/" + order.id}>
+                        <Button variant="outline" size="sm" className="lg:w-auto hover:cursor-pointer">
+                          View Details
+                        </Button>
+                      </Link>
+                     
                     </div>
                   </CardContent>
                 </Card>
@@ -145,9 +149,9 @@ export default function OrderList() {
 
 function OrderDetail({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <dl className="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+    <dl className="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1 lg:not-last:me-3">
       <dt className="text-sm font-medium text-gray-500">{label}:</dt>
-      <dd className="mt-1.5 text-base font-semibold text-gray-900">{value}</dd>
+      <dd className="mt-1.5 text-base text-gray-900">{value}</dd>
     </dl>
   )
 }

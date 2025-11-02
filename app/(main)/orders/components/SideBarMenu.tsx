@@ -14,11 +14,11 @@ import {
 export default function SideBarMenu() {
   return (
     <div className="w-full space-y-4">
-      <div className="space-y-1">
+      {/* <div className="space-y-1">
         <h4 className="text-lg font-semibold">Menu</h4>
-      </div>
+      </div> */}
 
-      <Card className="w-full bg-white shadow-sm rounded-lg">
+      <Card className="w-full bg-white shadow-sm rounded-md">
         {/* --- Profile Section --- */}
         <CardHeader className="flex flex-col items-center justify-center space-y-3 pb-4">
           <Avatar className="size-16">
