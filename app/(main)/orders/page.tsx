@@ -9,7 +9,7 @@ import ToolbarOrder from "./components/ToolbarOrder";
 export default function Page() {
 
   return (
-    <div className="lg:w-3/5 w-full mx-auto lg:px-4 px-2 py-10">
+    <div className="lg:w-3/5 w-full mx-auto lg:px-4 px-0 py-10">
 
       <div className="flex gap-4">
 

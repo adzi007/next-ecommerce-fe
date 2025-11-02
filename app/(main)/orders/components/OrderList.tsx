@@ -127,7 +127,7 @@ export default function OrderList() {
                         </Button>
                       )}
                       <Link href={"/orders/" + order.id}>
-                        <Button variant="outline" size="sm" className="lg:w-auto hover:cursor-pointer">
+                        <Button variant="outline" size="sm" className="lg:w-auto hover:cursor-pointer w-full">
                           View Details
                         </Button>
                       </Link>

@@ -5,6 +5,9 @@ import { Navbar } from "@/components/layout/navbar";
 import "../globals.css";
 import { NextAuthProvider } from "../providers/session-provider";
 import Footer from "@/components/layout/footer";
+// import { GlobalLoadingProgress } from "@/components/global-loading-progress";
+import { LoadingProgress } from "./components/loading-progress";
+import { RouteChangeHandler } from "./components/RouteChangeHandler";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 text-gray-900">
+      <body className="bg-gray-50 text-gray-900 relative">
+        {/* <GlobalLoadingProgress /> */}
+        <LoadingProgress />
+        <RouteChangeHandler />
         <NextAuthProvider>
           <ReactQueryProvider>
             <Navbar />

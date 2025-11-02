@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
+// import NavLink from "next/Navlink";
 import { useCartStore } from "@/store/cart.store";
 import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import { signOut } from "next-auth/react"
 
 import { dummyCart } from "@/data/cart";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { ChevronDown, ChevronUp, SearchIcon } from "lucide-react";
 import Autocomplete from "../ui/autocomplete";
@@ -42,18 +42,23 @@ import {
 } from "@/components/ui/drawer"
 import ModalSearch from "@/app/(main)/products/components/ModalSearch";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+// import NavLink from "@/app/(main)/components/nav-link";
+import { NavLink } from "@/app/(main)/components/nav-link";
 
 export function Navbar() {
 
   const items = useCartStore((state) => state.items);
   const totalItems = items.reduce((sum, i) => sum + i.qty, 0);
-
+  
   const { data: session } = useSession() 
+
+
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
 
-    if(session){
-
+    if(session  && !hasInitialized.current){
+      hasInitialized.current = true;
       // console.log("user >>> ", session.user.name);
       // console.log("get cart data", dummyCart);
 
@@ -151,12 +156,12 @@ export function Navbar() {
                                 {item.subItems.map((sub, j) => (
                                   <li key={j}>
                                     <DrawerClose asChild>
-                                      <Link
+                                      <NavLink
                                       href={sub.href}
                                       className="block text-gray-900 py-1 transition"
                                     >
                                       {sub.title}
-                                    </Link>
+                                    </NavLink>
                                     </DrawerClose>
                                     
                                   </li>
@@ -167,15 +172,18 @@ export function Navbar() {
                         )
                       }
 
-                      // 🔗 Single-level item (direct link)
+                      // 🔗 Single-level item (direct Navlink)
                       return (
                         <div key={i} className="border-b py-2">
-                          <Link
+                          <DrawerClose asChild>
+                            <NavLink
                             href={item.href!}
                             className="block w-full text-base font-medium py-2 hover:text-primary transition"
                           >
                             {item.title}
-                          </Link>
+                          </NavLink>
+                          </DrawerClose>
+                          
                         </div>
                       )
                     })}
@@ -190,10 +198,10 @@ export function Navbar() {
             </Drawer>
           </div>
 
-          <Link href="/" className="font-bold lg:text-2xl text-lg me-5">MyShop</Link>
+          <NavLink href="/" className="font-bold lg:text-2xl text-lg me-5">MyShop</NavLink>
           <div className="lg:flex hidden items-center gap-6">
-            <Link href="/products" className="hover:text-blue-600 font-medium">Products</Link>
-            <Link href="/cart" className="relative font-medium">Best Seller</Link>
+            <NavLink href="/products" className="hover:text-blue-600 font-medium">Products</NavLink>
+            <NavLink href="/cart" className="relative font-medium">Best Seller</NavLink>
             <DropdownMenu>
               <DropdownMenuTrigger className="font-medium flex items-center gap-1">Category <FaAngleDown size={12} className="mb-1" /></DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -205,8 +213,8 @@ export function Navbar() {
                 <DropdownMenuItem>Subscription</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link href="/cart" className="relative font-medium">About</Link>
-            <Link href="/cart" className="relative font-medium">FAQs</Link>
+            <NavLink href="/cart" className="relative font-medium">About</NavLink>
+            <NavLink href="/cart" className="relative font-medium">FAQs</NavLink>
           </div>
           
 
@@ -222,18 +230,18 @@ export function Navbar() {
           <ModalSearch />
           
          
-          <Link href="/cart" className="relative flex">
+          <NavLink href="/cart" className="relative flex">
             <PiShoppingCart className="lg:size-7 size-6" />
             {totalItems > 0 && (
               <span className="absolute size-5 flex justify-center items-center text-xs -top-1 -right-3 bg-blue-600 text-white rounded-full">
                 {totalItems}
               </span>
             )}
-          </Link>
+          </NavLink>
 
-          {/* { session && <Button variant="link" onClick={() => signOut({ callbackUrl: "/login" })} className="hover:cursor-pointer">Logout</Button> } */}
+          {/* { session && <Button variant="Navlink" onClick={() => signOut({ callbackUrl: "/login" })} className="hover:cursor-pointer">Logout</Button> } */}
 
-          { !session && <Link href="/login" className="relative">Login</Link> }
+          { !session && <NavLink href="/login" className="relative">Login</NavLink> }
 
           { session &&
             <DropdownMenu>
@@ -247,9 +255,8 @@ export function Navbar() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/orders">Orders</Link>
-                  
+                <DropdownMenuItem asChild>
+                  <NavLink href="/orders" className="hover:cursor-pointer">Orders</NavLink>
                 </DropdownMenuItem>
                 <DropdownMenuItem>Team</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })} >Logout</DropdownMenuItem>
