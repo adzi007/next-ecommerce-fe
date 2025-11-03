@@ -8,6 +8,7 @@ type ProductFilter = {
     priceMax: number;
     rating: number[] | null;
     orderBy: string;
+    page: number; // 🔹 new
 } 
 
 interface ProductFilterStore {
@@ -17,6 +18,8 @@ interface ProductFilterStore {
     setPriceMax: (input: number) => void
     setRating:   (input: number) => void
     setOrderBy:  (input: string) => void
+    setPage:     (input: number) => void;
+    resetFilter: () => void;
 }
 
 const initialState: ProductFilter = {
@@ -27,6 +30,7 @@ const initialState: ProductFilter = {
   priceMax: 1000,
   rating: null,
   orderBy: "",
+  page: 1,
 }
 
 export const useProductFilterStore = create<ProductFilterStore>( (set) => ({
@@ -66,5 +70,10 @@ export const useProductFilterStore = create<ProductFilterStore>( (set) => ({
             filterProduct: { ...state.filterProduct, orderBy: input },
         }))
     },
+    setPage: (input: number) =>
+        set((state) => ({
+        filterProduct: { ...state.filterProduct, page: input },
+    })),
+
     resetFilter: () => set({ filterProduct: initialState }),
 }))
