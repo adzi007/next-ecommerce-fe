@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator'
 import { Slider } from '@/components/ui/slider'
 import React, { useCallback, useEffect } from 'react'
 import { useProductFilterStore } from '../store/productFilter.store'
+import { useCategory } from '../hooks/useCategory'
 
 // const CATEGORIES = ["Electronics", "Fashion", "Home & Living", "Sports"];
 const CATEGORIES = [
@@ -23,6 +24,8 @@ const SORT_OPTIONS = [
 ];
 
 export default function FormFilter() {
+
+    const { data, isLoading, isError } = useCategory()
 
     const {
         filterProduct,
@@ -90,9 +93,9 @@ export default function FormFilter() {
         [setOrderBy]
     );
 
-    //useEffect(() => {
-    //  console.log("filterProduct >>> ", filterProduct);
-    //}, [filterProduct])
+    useEffect(() => {
+     console.log("category >>> ", data);
+    }, [data])
   
 
     return (
@@ -106,12 +109,7 @@ export default function FormFilter() {
                         <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
-                        { CATEGORIES.map((cat,i) => <SelectItem key={i} value={cat.value}>{ cat.label }</SelectItem> ) }
-
-                        {/* <SelectItem value="electronics">Electronics</SelectItem>
-                        <SelectItem value="fashion">Fashion</SelectItem>
-                        <SelectItem value="home">Home & Living</SelectItem>
-                        <SelectItem value="sports">Sports</SelectItem> */}
+                        { data?.category.map((cat,i) => <SelectItem key={i} value={cat.slug}>{ cat.name }</SelectItem> ) }
                     </SelectContent>
                 </Select>
             </div>

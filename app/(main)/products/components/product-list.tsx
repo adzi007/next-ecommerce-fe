@@ -2,7 +2,7 @@
 import { Separator } from "@/components/ui/separator";
 import PaginationProduct from "./PaginationProduct";
 import { ProductCard } from "./product-card";
-import { dummyProducts } from "@/data/products";
+// import { dummyProducts } from "@/data/products";
 import { useProductFilterStore } from "../store/productFilter.store";
 import { useEffect, useMemo } from "react";
 import { useProducts } from "../hooks/useProducts";
@@ -13,56 +13,54 @@ import { useSearchParams } from "next/navigation";
 
 export function ProductList() {
 
-  // const products = dummyProducts.data;
   const searchParams = useSearchParams();
-
-  const {
-    filterProduct,
-    setCategory,
-    setPriceMin,
-    setPriceMax,
-    setRating,
-    setOrderBy,
-    setPage,
-  } = useProductFilterStore();
+  const { filterProduct, setCategory, setPriceMin, setPriceMax, setRating, setOrderBy, setPage } =
+    useProductFilterStore();
 
   useEffect(() => {
-    const category = searchParams.get("category") || "";
-    const orderBy = searchParams.get("orderBy") || "popular";
-    const priceMin = Number(searchParams.get("priceMin")) || 0;
-    const priceMax = Number(searchParams.get("priceMax")) || 1000;
-    const rating = searchParams.get("rating")
-      ? searchParams
-          .get("rating")!
-          .split(",")
-          .map((r) => Number(r))
-      : null;
+    // Get params only once from URL
+    const category = searchParams.get("category");
+    const orderBy = searchParams.get("orderBy");
+    const priceMin = searchParams.get("priceMin");
+    const priceMax = searchParams.get("priceMax");
+    const rating = searchParams.get("rating");
+    const page = searchParams.get("page");
 
-    const page = Number(searchParams.get("page")) || 1; // 🔹 page param
+    // Only update Zustand if the param actually exists
+    if (category) setCategory(category);
+    if (orderBy) setOrderBy(orderBy);
+    if (priceMin) setPriceMin(Number(priceMin));
+    if (priceMax) setPriceMax(Number(priceMax));
+    if (page) setPage(Number(page));
+    if (rating) {
+      const ratingArr = rating.split(",").map((r) => Number(r));
+      ratingArr.forEach((r) => setRating(r));
+    }
+  }, []); // 🔹 Run only once on mount
 
-    setCategory(category);
-    setOrderBy(orderBy);
-    setPriceMin(priceMin);
-    setPriceMax(priceMax);
-    setPage(page);
-
-    if (rating) rating.forEach((r) => setRating(r));
-
-  }, [searchParams]);
-
+  // Filters come purely from the URL-based state
   const filters = useMemo(
     () => ({
-      category: filterProduct.category,
-      orderBy: filterProduct.orderBy,
-      priceMin: filterProduct.priceMin,
-      priceMax: filterProduct.priceMax,
-      rating: filterProduct.rating,
-      page: filterProduct.page,
+      category: searchParams.get("category") || "",
+      orderBy: searchParams.get("orderBy") || "popular",
+      priceMin: Number(searchParams.get("priceMin")) || 0,
+      priceMax: Number(searchParams.get("priceMax")) || 1000,
+      rating: searchParams.get("rating")
+        ? searchParams
+            .get("rating")!
+            .split(",")
+            .map((r) => Number(r))
+        : null,
+      page: Number(searchParams.get("page")) || 1,
+      search: searchParams.get("q") || "",
     }),
-    [filterProduct]
+    [searchParams]
   );
 
   const { data, isLoading, isError, error } = useProducts(filters);
+  
+
+  // const { data, isLoading, isError, error } = useProducts(filters);
 
   if (isLoading) {
     return (
@@ -79,6 +77,15 @@ export function ProductList() {
   }
 
   const products: Product[] = data?.products ?? [];
+
+  if(data) {
+    console.log("data >>>> ", data);
+  }
+
+  // useEffect(() => {
+  //   console.log("data >>>> ", data);
+  // }, [data])
+  
 
   return (
 

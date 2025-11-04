@@ -4,18 +4,58 @@ import React from 'react'
 import FormFilter from './FormFilter'
 import { Button } from '@/components/ui/button'
 import { useProductFilterStore } from '../store/productFilter.store'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function SidebarFilter() {
 
     const { filterProduct } = useProductFilterStore();
 
+    const router        = useRouter();
+    const searchParams  = useSearchParams();
+
 
     const hanldeFilter = () => {
 
-        console.log("filterProduct >>> ", filterProduct);
-        
+        const params = new URLSearchParams(searchParams.toString());
 
+        // console.log("filterProduct >>> ", filterProduct);
+
+        if (filterProduct.category)
+            params.set("category", filterProduct.category);
+        else params.delete("category");
+
+        if (filterProduct.orderBy)
+            params.set("orderBy", filterProduct.orderBy);
+        else params.delete("orderBy");
+
+        if (filterProduct.priceMin !== undefined)
+            params.set("priceMin", String(filterProduct.priceMin));
+        else params.delete("priceMin");
+
+        if (filterProduct.priceMax !== undefined)
+            params.set("priceMax", String(filterProduct.priceMax));
+        else params.delete("priceMax");
+
+        if (filterProduct.rating && filterProduct.rating.length > 0)
+            params.set("rating", filterProduct.rating.join(","));
+        else params.delete("rating");
+
+        if (filterProduct.page)
+            params.set("page", String(filterProduct.page));
+        else params.delete("page");
+
+        if (filterProduct.searchKeywords)
+            params.set("search", filterProduct.searchKeywords);
+        else params.delete("search");
+
+        // ✅ Push the updated URL without a full reload
+        router.push(`?${params.toString()}`);
+        
     }
+
+    const handleReset = () => {
+        router.push("/products"); // or your base route
+    };
 
 
     return (
@@ -32,7 +72,7 @@ export default function SidebarFilter() {
 
                     <div className="grid grid-cols-1 justify-between gap-3 w-full left-0">
                         <Button variant="default" className="w-full hover:cursor-pointer" onClick={hanldeFilter}>Filter</Button>
-                        <Button variant="outline" className="w-full hover:cursor-pointer">Reset</Button>
+                        <Button variant="outline" className="w-full hover:cursor-pointer" onClick={handleReset}>Reset</Button>
                     </div>
                 </CardContent>
             </Card>

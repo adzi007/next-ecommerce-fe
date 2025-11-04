@@ -1,22 +1,3 @@
-// export interface Product {
-//   id: number;
-//   name: string;
-//   slug: string;
-//   price: number;
-//   // priceSell: number;
-//   image: string;
-// }
-
-// export interface ProductDummyJson {
-//   id: number;
-//   title: string;
-//   description: string;
-//   price: number;
-//   thumbnail: string;
-//   category?: string;
-//   rating?: number;
-// }
-
 export interface Product {
   id: number;
   title: string;
@@ -61,4 +42,10 @@ export interface ProductMeta {
   updatedAt: string;
   barcode: string;
   qrCode: string;
+}
+
+export interface CategoryProduct {
+  slug: string;
+  name: string;
+  url:string;
 }
