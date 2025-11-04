@@ -28,11 +28,11 @@ export default function SidebarFilter() {
             params.set("orderBy", filterProduct.orderBy);
         else params.delete("orderBy");
 
-        if (filterProduct.priceMin !== undefined)
+        if (filterProduct.priceMin !== undefined && filterProduct.priceMin > filterProduct.priceDefaultMin)
             params.set("priceMin", String(filterProduct.priceMin));
         else params.delete("priceMin");
 
-        if (filterProduct.priceMax !== undefined)
+        if (filterProduct.priceMax !== undefined && filterProduct.priceMax < filterProduct.priceDefaultMax)
             params.set("priceMax", String(filterProduct.priceMax));
         else params.delete("priceMax");
 
@@ -40,9 +40,12 @@ export default function SidebarFilter() {
             params.set("rating", filterProduct.rating.join(","));
         else params.delete("rating");
 
-        if (filterProduct.page)
-            params.set("page", String(filterProduct.page));
-        else params.delete("page");
+        // if (filterProduct.page)
+        //     params.set("page", String(1));
+        // else params.delete("page");
+
+        params.set("page", String(1));
+
 
         if (filterProduct.searchKeywords)
             params.set("search", filterProduct.searchKeywords);

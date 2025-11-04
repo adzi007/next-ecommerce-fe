@@ -9,13 +9,14 @@ import { useProducts } from "../hooks/useProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "../types";
 import { useSearchParams } from "next/navigation";
+import { usePaginationProductStore } from "../store/productPagination.store";
 
 
 export function ProductList() {
 
   const searchParams = useSearchParams();
-  const { filterProduct, setCategory, setPriceMin, setPriceMax, setRating, setOrderBy, setPage } =
-    useProductFilterStore();
+  const { setCategory, setPriceMin, setPriceMax, setRating, setOrderBy, setPage } = useProductFilterStore();
+  const { setPagination } = usePaginationProductStore()
 
   useEffect(() => {
     // Get params only once from URL
@@ -55,9 +56,30 @@ export function ProductList() {
       search: searchParams.get("q") || "",
     }),
     [searchParams]
-  );
+  );  
 
-  const { data, isLoading, isError, error } = useProducts(filters);
+  const { data, isLoading, isError, error, isSuccess } = useProducts(filters);
+
+  useEffect(() => {
+    if (!isSuccess || !data) return;
+
+    setPagination((prev) => {
+      if (
+        prev &&
+        prev.limit === 12 &&
+        prev.skip === data.skip &&
+        prev.total === data.total
+      ) {
+        return prev; // no change, skip update
+      }
+
+      return {
+        limit: 12,
+        skip: data.skip ?? 0,
+        total: data.total ?? 0,
+      };
+    });
+  }, [isSuccess, data, setPagination]);
   
 
   // const { data, isLoading, isError, error } = useProducts(filters);
@@ -78,13 +100,50 @@ export function ProductList() {
 
   const products: Product[] = data?.products ?? [];
 
-  if(data) {
-    console.log("data >>>> ", data);
-  }
 
   // useEffect(() => {
-  //   console.log("data >>>> ", data);
-  // }, [data])
+  //   if (!isSuccess || !data) return;
+
+  //   setPagination((prev) => {
+  //     if (
+  //       prev &&
+  //       prev.limit === data.limit &&
+  //       prev.skip === data.skip &&
+  //       prev.total === data.total
+  //     ) {
+  //       return prev; // no change, skip update
+  //     }
+
+  //     return {
+  //       limit: data.limit ?? 0,
+  //       skip: data.skip ?? 0,
+  //       total: data.total ?? 0,
+  //     };
+  //   });
+  // }, [isSuccess, data, setPagination]);
+
+
+  // useEffect(() => {
+  //   if (!isSuccess || !data) return;
+
+  //   // Avoid unnecessary updates
+  //   setPagination((prev) => {
+  //     if (
+  //       prev &&
+  //       prev.limit === data.limit &&
+  //       prev.skip === data.skip &&
+  //       prev.total === data.total
+  //     ) {
+  //       return prev;
+  //     }
+  //     return {
+  //       limit: data.limit ?? 0,
+  //       skip: data.skip ?? 0,
+  //       total: data.total ?? 0,
+  //     };
+  //   });
+  // }, [isSuccess, data, setPagination]);
+
   
 
   return (

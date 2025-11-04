@@ -29,7 +29,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     
-    <div className="rounded-sm border flex flex-col bg-white h-[340px]">
+    <div className="rounded-sm border flex flex-col bg-white h-[340px]" key={product.id}>
 
       <NavLink href={"/products/" + product.id}>
         <div className="relative w-full h-48 mb-3">

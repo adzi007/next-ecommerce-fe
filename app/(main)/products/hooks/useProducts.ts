@@ -13,8 +13,10 @@ export function useProducts(filters: {
 }) {
 //   const { category, orderBy, priceMin, priceMax, rating } = useProductFilterStore();
 
+    // console.log("filters.page >>>> ", filters.page);
+    
     const limit = 12;
-    const skip = Math.max(0, ((filters.page ?? 1) - 1) * limit);
+    const skip = Math.max(0, ((filters.page ?? 1) - 1) * limit);   
 
     // const params = {
     //     limit,
