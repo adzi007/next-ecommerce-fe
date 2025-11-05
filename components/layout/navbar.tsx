@@ -64,13 +64,13 @@ export function Navbar() {
 
       dummyCart.data.map((row) => {
         useCartStore.getState().addItem({ 
-          name: row.name, 
-          image:row.image, 
+          title: row.name, 
+          thumbnail:row.image, 
           id:row.id, 
-          qty: 
-          row.qty, 
-          priceSell:row.price, 
-          slug:row.slug })
+          qty: row.qty, 
+          price:row.price, 
+          slug: row.name,
+        })
       })
     }
     
@@ -223,7 +223,7 @@ export function Navbar() {
         <nav className="flex items-center lg:gap-6 gap-4">
           
           <div className="lg:block hidden">
-          <Autocomplete   />
+            <Autocomplete   />
           </div>
 
           {/* <Button variant="ghost" className="lg:hidden block p-0! m-0"><FiSearch className="size-6" /></Button> */}
