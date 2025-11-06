@@ -7,41 +7,44 @@ import { Button } from '@/components/ui/button'
 import { Search } from 'lucide-react'
 
 // Simulated API call
-const fetchSuggestions = async (query: string): Promise<string[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 300)) // Simulate network delay
-  const allSuggestions = [
-    'React',
-    'Redux',
-    'Next.js',
-    'TypeScript',
-    'JavaScript',
-    'Node.js',
-    'Express',
-    'MongoDB',
-    'PostgreSQL',
-    'GraphQL',
-    'Vue.js',
-    'Angular',
-    'Svelte',
-    'Tailwind CSS',
-    'Sass',
-    'Webpack',
-    'Babel',
-    'ESLint',
-    'Jest',
-    'Cypress',
-  ]
-  return allSuggestions.filter((suggestion) =>
-    suggestion.toLowerCase().includes(query.toLowerCase()),
-  )
-}
+// const fetchSuggestions = async (query: string): Promise<string[]> => {
+//   await new Promise((resolve) => setTimeout(resolve, 300)) // Simulate network delay
+//   const allSuggestions = [
+//     'React',
+//     'Redux',
+//     'Next.js',
+//     'TypeScript',
+//     'JavaScript',
+//     'Node.js',
+//     'Express',
+//     'MongoDB',
+//     'PostgreSQL',
+//     'GraphQL',
+//     'Vue.js',
+//     'Angular',
+//     'Svelte',
+//     'Tailwind CSS',
+//     'Sass',
+//     'Webpack',
+//     'Babel',
+//     'ESLint',
+//     'Jest',
+//     'Cypress',
+//   ]
+  // return allSuggestions.filter((suggestion) =>
+  //   suggestion.toLowerCase().includes(query.toLowerCase()),
+  // )
+// }
 
 interface AutoCompleteProps {
   value?: string
   onChange?: (value: string) => void
+  fetcher: (query: string) => Promise<string[]>   // 👈 added
+  onSelect?: (value: string) => void  
 }
 
-export default function Autocomplete({ value = '', onChange }: AutoCompleteProps) {
+export default function Autocomplete({ value = '', onChange, fetcher, onSelect }: AutoCompleteProps) {
+
   const [query, setQuery] = useState(value)
   const [debouncedQuery] = useDebounce(query, 300)
   const [suggestions, setSuggestions] = useState<string[]>([])
@@ -50,18 +53,32 @@ export default function Autocomplete({ value = '', onChange }: AutoCompleteProps
   const [isFocused, setIsFocused] = useState(false)
 
   const fetchSuggestionsCallback = useCallback(async (q: string) => {
+
     if (q.trim() === '') {
       setSuggestions([])
       return
     }
+
     setIsLoading(true)
-    const results = await fetchSuggestions(q)
-    setSuggestions(results)
-    setIsLoading(false)
+
+    try {
+      const results = await fetcher(q) // 👈 use the passed-in fetcher
+      setSuggestions(results)
+    } finally {
+      setIsLoading(false)
+    }
+
+
+    // const results = await fetchSuggestions(q)
+    // setSuggestions(results)
+    // setIsLoading(false)
+
+
   }, [])
 
   useEffect(() => {
     if (debouncedQuery && isFocused) {
+      if (suggestions.length === 1 && suggestions[0] === debouncedQuery) return
       fetchSuggestionsCallback(debouncedQuery)
     } else {
       setSuggestions([])
@@ -69,10 +86,16 @@ export default function Autocomplete({ value = '', onChange }: AutoCompleteProps
   }, [debouncedQuery, fetchSuggestionsCallback, isFocused])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    // console.log("typing...", e.target.value);
+    
     const newValue = e.target.value
     setQuery(newValue)
     onChange?.(newValue)
     setSelectedIndex(-1)
+
+    setIsLoading(true)
+    setIsFocused(true)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -95,18 +118,30 @@ export default function Autocomplete({ value = '', onChange }: AutoCompleteProps
   }
 
   const handleSuggestionClick = (suggestion: string) => {
+
+    // console.log("suggestion >>>> ", suggestion);
+    
     setQuery(suggestion)
+    onSelect?.(suggestion)
     onChange?.(suggestion)
     setSuggestions([])
     setSelectedIndex(-1)
+    setIsFocused(false)
   }
 
   const handleFocus = () => {
     setIsFocused(true)
   }
 
-  const handleBlur = () => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     // Delay hiding suggestions to allow for click events on suggestions
+
+    const relatedTarget = e.relatedTarget as HTMLElement | null
+
+    if (relatedTarget && relatedTarget.getAttribute('role') === 'option') {
+      return
+    }
+
     setTimeout(() => {
       setIsFocused(false)
       setSuggestions([])
@@ -160,7 +195,11 @@ export default function Autocomplete({ value = '', onChange }: AutoCompleteProps
               className={`px-4 py-2 cursor-pointer hover:bg-muted ${
                 index === selectedIndex ? 'bg-muted' : ''
               }`}
-              onClick={() => handleSuggestionClick(suggestion)}
+              // onClick={() => handleSuggestionClick(suggestion)}
+              onMouseDown={(e) => {
+                e.preventDefault() // Prevent input from losing focus too early
+                handleSuggestionClick(suggestion)
+              }}
               role="option"
               aria-selected={index === selectedIndex}
             >

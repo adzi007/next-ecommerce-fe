@@ -44,6 +44,7 @@ import ModalSearch from "@/app/(main)/products/components/ModalSearch";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 // import NavLink from "@/app/(main)/components/nav-link";
 import { NavLink } from "@/app/(main)/components/nav-link";
+import ProductSearchAutocomplete from "@/app/(main)/products/components/ProductSearchAutocomplete";
 
 export function Navbar() {
 
@@ -223,7 +224,8 @@ export function Navbar() {
         <nav className="flex items-center lg:gap-6 gap-4">
           
           <div className="lg:block hidden">
-            <Autocomplete   />
+            {/* <Autocomplete   /> */}
+            <ProductSearchAutocomplete />
           </div>
 
           {/* <Button variant="ghost" className="lg:hidden block p-0! m-0"><FiSearch className="size-6" /></Button> */}
