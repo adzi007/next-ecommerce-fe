@@ -1,33 +1,21 @@
-import axios from 'axios'
+import { Product } from "../types";
+
+const BASE_URL = "https://dummyjson.com";
 
 export async function getAutocompleteSuggestions(query: string): Promise<string[]> {
-//   if (!query) return []
-//   const response = await axios.get(`/api/products/autocomplete?query=${query}`)
-//   return response.data
 
-    const allSuggestions = [
-        'React',
-        'Redux',
-        'Next.js',
-        'TypeScript',
-        'JavaScript',
-        'Node.js',
-        'Express',
-        'MongoDB',
-        'PostgreSQL',
-        'GraphQL',
-        'Vue.js',
-        'Angular',
-        'Svelte',
-        'Tailwind CSS',
-        'Sass',
-        'Webpack',
-        'Babel',
-        'ESLint',
-        'Jest',
-        'Cypress',
-    ]
+  const res = await fetch(BASE_URL + `/products/search?q=${query}&select=title&limit=10`, { cache: "no-store" });
 
-    return allSuggestions.filter((suggestion) => suggestion.toLowerCase().includes(query.toLowerCase())
-  )
+  if (!res.ok) {
+        throw new Error("Failed to fetch products");
+  }
+
+  const data = await res.json();
+
+  const suggestions: string[] = []
+
+  data.products.map( (item: any) => suggestions.push(item.title.toLowerCase()))
+
+  return suggestions
+
 }
