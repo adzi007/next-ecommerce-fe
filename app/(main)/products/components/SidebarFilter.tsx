@@ -9,7 +9,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 export default function SidebarFilter() {
 
     const { filterProduct } = useProductFilterStore();
-
     const router        = useRouter();
     const searchParams  = useSearchParams();
 

@@ -4,40 +4,42 @@ import ProductActions from "./components/ProductActions";
 import ProductInfo from "./components/ProductInfo";
 import ProductOptions from "./components/ProductOptions";
 import ProductDescription from "./components/ProductDescription";
+import { fetchProductDetail } from "./services/product.service";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }>}) {
 
     const { slug } = await params
 
+    const productresult = await fetchProductDetail(slug.split("-")[0]);
+    
+    let productGalery: any[] = []
+
+    productresult.images.map((image: string, i: number) => productGalery.push({
+        id: i, src: image, alt: "Product front view"
+    }) )
+
+
     // TODO: fetch product data by slug
     const product = {
-        id: 1,
-        name: 'Apple iMac 24" All-In-One Computer, Apple M1, 8GB RAM, 256GB SSD, Mac OS, Pink',
-        price: 1249.99,
-        brand: "Ugreen",
+        id: productresult.id,
+        name: productresult.title,
+        price: productresult.price,
+        brand: productresult.brand,
         category: {
-            name:"Upper Wear",
-            slug: "upper-wear"
+            name:productresult.category,
+            slug: productresult.category.toLowerCase().replace(/\s/g, '-')
         },
-        stockStatus: "In Stock",
-        rating: 5,
-        reviews: 345,
-        images: [
-            { id: 1, src: "https://picsum.photos/id/1011/600/600", alt: "Product front view" },
-            { id: 2, src: "https://picsum.photos/id/1018/600/600", alt: "Product side view" },
-            { id: 3, src: "https://picsum.photos/id/1025/600/600", alt: "Product top view" },
-            { id: 4, src: "https://picsum.photos/id/1035/600/600", alt: "Product detail view" },
-            { id: 5, src: "https://picsum.photos/id/1042/600/600", alt: "Product packaging" }
-        ],
-        description: `
-            Studio quality three mic array for crystal clear calls and voice recordings.
-            Six-speaker sound system for a remarkably robust and high-quality audio experience.
-        `,
+        stock: productresult.stock,
+        stockStatus:  productresult.stock > 0 ? "In Stock":"Out Stock",
+        // rating: productresult.rating,
+        rating: Math.floor(productresult.rating),
+        reviews: productresult.reviews.legth,
+        images: productGalery,
+        description: productresult.description,
         additionalInfo: `
             Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast Wi-Fi 6 and Bluetooth 5.0.
         `,
     }
-    
 
     return (
 

@@ -27,11 +27,15 @@ export function ProductCard({ product }: { product: Product }) {
     addToCart(product)
   }
 
+  // console.log("product >>>>> ", product.id);
+  const slug = product.id + '-' + product.title.toLowerCase().replace(/\s/g, '-');
+
+
   return (
     
     <div className="rounded-sm border flex flex-col bg-white h-[340px]" key={product.id}>
 
-      <NavLink href={"/products/" + product.id}>
+      <NavLink href={"/products/" + slug}>
         <div className="relative w-full h-48 mb-3">
           <Image
             src={product.thumbnail}
@@ -46,7 +50,7 @@ export function ProductCard({ product }: { product: Product }) {
       
 
       <div className="px-2 pb-2 pt-0 h-full flex flex-col justify-between">
-        <NavLink href={"/products/" + product.id}>
+        <NavLink href={"/products/" + slug}>
           <div className="flex items-center">
               <FaStar className="size-3.5 text-yellow-400 -mt-0.5" />
               <p className="ms-1 text-xs text-gray-900 dark:text-white">{ product.rating }/5</p>

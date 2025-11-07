@@ -15,7 +15,7 @@ import { usePaginationProductStore } from "../store/productPagination.store";
 export function ProductList() {
 
   const searchParams = useSearchParams();
-  const { setCategory, setPriceMin, setPriceMax, setRating, setOrderBy, setPage } = useProductFilterStore();
+  const { setCategory, setPriceMin, setPriceMax, setRating, setOrderBy, setPage, setSearchKeywords } = useProductFilterStore();
   const { setPagination } = usePaginationProductStore()
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export function ProductList() {
     const priceMax = searchParams.get("priceMax");
     const rating = searchParams.get("rating");
     const page = searchParams.get("page");
+    const search = searchParams.get("search");
 
     // Only update Zustand if the param actually exists
     if (category) setCategory(category);
@@ -37,6 +38,7 @@ export function ProductList() {
       const ratingArr = rating.split(",").map((r) => Number(r));
       ratingArr.forEach((r) => setRating(r));
     }
+    if(search) setSearchKeywords(search)
   }, []); // 🔹 Run only once on mount
 
   // Filters come purely from the URL-based state
@@ -53,7 +55,7 @@ export function ProductList() {
             .map((r) => Number(r))
         : null,
       page: Number(searchParams.get("page")) || 1,
-      search: searchParams.get("q") || "",
+      search: searchParams.get("search") || "",
     }),
     [searchParams]
   );  

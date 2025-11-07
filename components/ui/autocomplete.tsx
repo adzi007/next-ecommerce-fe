@@ -40,10 +40,11 @@ interface AutoCompleteProps {
   value?: string
   onChange?: (value: string) => void
   fetcher: (query: string) => Promise<string[]>   // 👈 added
-  onSelect?: (value: string) => void  
+  onSelect?: (value: string) => void
+  onSubmit: () => void
 }
 
-export default function Autocomplete({ value = '', onChange, fetcher, onSelect }: AutoCompleteProps) {
+export default function Autocomplete({ value = '', onChange, fetcher, onSelect, onSubmit }: AutoCompleteProps) {
 
   const [query, setQuery] = useState(value)
   const [debouncedQuery] = useDebounce(query, 300)
@@ -93,24 +94,40 @@ export default function Autocomplete({ value = '', onChange, fetcher, onSelect }
     setQuery(newValue)
     onChange?.(newValue)
     setSelectedIndex(-1)
+    // onSelect?.(e.target.value)
 
     setIsLoading(true)
     setIsFocused(true)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+
     if (e.key === 'ArrowDown') {
       e.preventDefault()
       setSelectedIndex((prev) =>
         prev < suggestions.length - 1 ? prev + 1 : prev,
       )
     } else if (e.key === 'ArrowUp') {
+
       e.preventDefault()
       setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1))
+
     } else if (e.key === 'Enter' && selectedIndex >= 0) {
+
+      // console.log("select by click enter");
+      
       setQuery(suggestions[selectedIndex])
       setSuggestions([])
       setSelectedIndex(-1)
+      onChange?.(suggestions[selectedIndex])
+      onSelect?.(suggestions[selectedIndex])
+      setIsFocused(false)
+
+    }else if (e.key === 'Enter' && selectedIndex == -1) {
+
+      // console.log("Submit serch");
+      onSubmit()
+
     } else if (e.key === 'Escape') {
       setSuggestions([])
       setSelectedIndex(-1)
@@ -169,6 +186,7 @@ export default function Autocomplete({ value = '', onChange, fetcher, onSelect }
         <Button
           size="icon"
           variant="ghost"
+          onClick={onSubmit}
           className="absolute right-0 top-0 h-full"
           aria-label="Search"
         >
